@@ -1,0 +1,57 @@
+ddl-auto=update ensures tables are created automatically based on your entities.
+
+show-sql=true prints queries in console, useful for learning.
+
+spring.jpa.properties.hibernate.format_sql=true
+What it does:
+Tells Hibernate to format the SQL statements it generates so they’re readable in your console.
+
+Example:
+
+Without formatting:
+
+insert into students (first_name, last_name, email, enrolled_grade, id) values (?, ?, ?, ?, ?)
+With formatting:
+
+insert into students
+    (first_name, last_name, email, enrolled_grade, id)
+values
+    (?, ?, ?, ?, ?)
+Why it’s useful:
+Makes long SQL statements easier to read during development, which is great for debugging and learning how JPA translates your entities to SQL.
+
+2️⃣ spring.jpa.show-sql=true
+What it does:
+Tells Spring/Hibernate to print all SQL statements executed by JPA to the console.
+
+Why it’s useful:
+You can see exactly what SQL is being sent to MySQL whenever you call repository or service methods.
+
+Note:
+On its own, the output can be messy, so it’s often combined with format_sql=true for readability.
+
+3️⃣ logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+What it does:
+This controls the logging of the actual parameter values that Hibernate binds to your SQL statements.
+
+Example:
+
+For this entity insert:
+
+Student student = new Student("Ali", "Khan", "ali@gmail.com", "G-09-A");
+studentRepository.save(student);
+With this logging:
+
+binding parameter [1] as [VARCHAR] - [Ali]
+binding parameter [2] as [VARCHAR] - [Khan]
+binding parameter [3] as [VARCHAR] - [ali@gmail.com]
+binding parameter [4] as [VARCHAR] - [G-09-A]
+Why it’s useful:
+Shows exactly what values Hibernate is sending to the database. Essential for debugging tricky problems like:
+
+Wrong values being inserted
+
+Nulls where you didn’t expect
+
+Type mismatches
+
