@@ -19,9 +19,9 @@ public class SubjectController {
     private SubjectService subjectService;
 
     @PostMapping
-    public ResponseEntity<?> addSubject(@Valid @RequestBody CreateSubjectRequestDto request){
+    public ResponseEntity<?> createSubject(@Valid @RequestBody CreateSubjectRequestDto request){
 
-        SubjectResponseDto saved = subjectService.addSubject(request);
+        SubjectResponseDto saved = subjectService.createSubject(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 

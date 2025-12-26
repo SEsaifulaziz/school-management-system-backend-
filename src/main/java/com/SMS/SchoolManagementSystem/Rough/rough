@@ -1,0 +1,6 @@
+public EnrollmentResponseDto createEnrollment(CreateEnrollmentRequestDto create){
+        Optional<Enrollment> student = enrollmentRepo.findById(create.getStudentId());
+        Optional<Enrollment> subject  = enrollmentRepo.findById(create.getSubjectId());
+
+        if(!student.isPresent() && !subject.isPresent()){
+        }

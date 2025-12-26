@@ -9,11 +9,14 @@ public class CreateStudentRequestDto {
 
     @NotBlank
     private String firstName;
+
     @NotBlank
     private String lastName;
+
     @Email
     @NotBlank
     private String email;
+
     @NotBlank
     private String enrolledGrade;
 }

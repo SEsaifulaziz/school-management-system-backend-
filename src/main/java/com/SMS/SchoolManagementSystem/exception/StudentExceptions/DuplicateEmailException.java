@@ -1,4 +1,4 @@
-package com.SMS.SchoolManagementSystem.exception;
+package com.SMS.SchoolManagementSystem.exception.StudentExceptions;
 
 public class DuplicateEmailException extends RuntimeException{
     public DuplicateEmailException(String email){

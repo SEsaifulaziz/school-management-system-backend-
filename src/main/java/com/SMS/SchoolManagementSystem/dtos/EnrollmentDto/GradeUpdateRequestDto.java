@@ -1,12 +1,15 @@
 package com.SMS.SchoolManagementSystem.dtos.EnrollmentDto;
 
-import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
 import jakarta.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.Normalized;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
-public class GradeUpdateRequest {
+@Data
+@RequiredArgsConstructor
+public class GradeUpdateRequestDto {
 
     @NotBlank(message = "Final grade id required")
     private String finalGrade;
+
 
 }

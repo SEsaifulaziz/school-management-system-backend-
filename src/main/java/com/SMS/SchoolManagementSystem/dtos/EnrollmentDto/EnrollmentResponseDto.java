@@ -2,11 +2,13 @@ package com.SMS.SchoolManagementSystem.dtos.EnrollmentDto;
 
 import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-public class EnrollmentResponse {
+@RequiredArgsConstructor
+public class EnrollmentResponseDto {
 
     private Long enrollmentId;
 

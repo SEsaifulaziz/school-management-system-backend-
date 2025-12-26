@@ -4,8 +4,8 @@ import com.SMS.SchoolManagementSystem.dtos.StudentDto.CreateStudentRequestDto;
 import com.SMS.SchoolManagementSystem.dtos.StudentDto.StudentResponseDto;
 import com.SMS.SchoolManagementSystem.dtos.StudentDto.UpdateStudentRequestDto;
 import com.SMS.SchoolManagementSystem.entity.Student;
-import com.SMS.SchoolManagementSystem.exception.DuplicateEmailException;
-import com.SMS.SchoolManagementSystem.exception.StudentNotFoundException;
+import com.SMS.SchoolManagementSystem.exception.StudentExceptions.DuplicateEmailException;
+import com.SMS.SchoolManagementSystem.exception.StudentExceptions.StudentNotFoundException;
 import com.SMS.SchoolManagementSystem.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,9 @@ public class StudentService {
         return mapToResponse(student);
     }
 
-    public StudentResponseDto addStudent(CreateStudentRequestDto req){
+
+
+    public StudentResponseDto createStudent(CreateStudentRequestDto req){
         if(studentRepo.existsByEmail(req.getEmail()))
             throw new DuplicateEmailException(req.getEmail());
 

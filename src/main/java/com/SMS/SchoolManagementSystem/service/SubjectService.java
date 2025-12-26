@@ -4,8 +4,8 @@ import com.SMS.SchoolManagementSystem.dtos.SubjectDto.CreateSubjectRequestDto;
 import com.SMS.SchoolManagementSystem.dtos.SubjectDto.SubjectResponseDto;
 import com.SMS.SchoolManagementSystem.dtos.SubjectDto.UpdateSubjectRequestDto;
 import com.SMS.SchoolManagementSystem.entity.Subject;
-import com.SMS.SchoolManagementSystem.exception.DuplicateCodeException;
-import com.SMS.SchoolManagementSystem.exception.SubjectNotFoundException;
+import com.SMS.SchoolManagementSystem.exception.SubjectExceptions.DuplicateCodeException;
+import com.SMS.SchoolManagementSystem.exception.SubjectExceptions.SubjectNotFoundException;
 import com.SMS.SchoolManagementSystem.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class SubjectService {
         return mapToResponse(subject);
     }
 
-    public SubjectResponseDto addSubject(CreateSubjectRequestDto req){
+    public SubjectResponseDto createSubject(CreateSubjectRequestDto req){
 
         if(subjectRepo.existsByCode(req.getCode()))
             throw new DuplicateCodeException(req.getCode());

@@ -1,4 +1,4 @@
-package com.SMS.SchoolManagementSystem.exception;
+package com.SMS.SchoolManagementSystem.exception.SubjectExceptions;
 
 public class SubjectNotFoundException extends RuntimeException {
     public SubjectNotFoundException(Long id){

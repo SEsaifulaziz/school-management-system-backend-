@@ -20,8 +20,8 @@ public class StudentController {
     private StudentService studentService;
 
     @PostMapping
-    public ResponseEntity<?> addStudent(@Valid @RequestBody CreateStudentRequestDto request){
-        StudentResponseDto saved = studentService.addStudent(request);
+    public ResponseEntity<?> createStudent(@Valid @RequestBody CreateStudentRequestDto request){
+        StudentResponseDto saved = studentService.createStudent(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
@@ -56,7 +56,7 @@ public class StudentController {
 
     @PutMapping("id/{id}")
     public ResponseEntity<?> updateStudent(@Valid @PathVariable Long id,
-                                           @Valid @RequestBody UpdateStudentRequestDto updateRequest){
+                                           @Valid @RequestBody UpdateStudentRequestDto updateRequest) {
         StudentResponseDto student = studentService.updateStudent(id, updateRequest);
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
