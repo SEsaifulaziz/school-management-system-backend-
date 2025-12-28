@@ -1,7 +1,6 @@
 package com.SMS.SchoolManagementSystem.exception;
 
-import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.DuplicateEnrollmentException;
-import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.EnrollmentNotFoundException;
+import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.*;
 import com.SMS.SchoolManagementSystem.exception.StudentExceptions.DuplicateEmailException;
 import com.SMS.SchoolManagementSystem.exception.StudentExceptions.StudentNotFoundException;
 import com.SMS.SchoolManagementSystem.exception.SubjectExceptions.DuplicateCodeException;
@@ -34,15 +33,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleValidation(MethodArgumentNotValidException ex){
-        Map<String, String> errors = new HashMap<>();
-        for(FieldError fieldError : ex.getBindingResult().getFieldErrors()){
-            errors.put(fieldError.getField(), fieldError.getDefaultMessage());
-        }
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(SubjectNotFoundException.class)
         public ResponseEntity<?> handleSubjectNotFound(SubjectNotFoundException ex){
         Map<String, String> error = new HashMap<>();
@@ -65,10 +55,54 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DuplicateEnrollmentException.class)
-    public ResponseEntity<?> handleDuplicateEnrollment(DuplicateEnrollmentException ex){
-    Map<String, String> error = new HashMap<>();
-    error.put("error", ex.getMessage());
-    return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    public ResponseEntity<?> handleDuplicateEnrollment(DuplicateEnrollmentException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(AlreadyActiveException.class)
+    public ResponseEntity<?> handleAlreadyActive(AlreadyActiveException ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleValidation(MethodArgumentNotValidException ex){
+        Map<String, String> errors = new HashMap<>();
+        for(FieldError fieldError : ex.getBindingResult().getFieldErrors()){
+            errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidStatusException.class)
+    public ResponseEntity<?> handleInvalidStatus(InvalidStatusException ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DroppedEnrollmentException.class)
+    public ResponseEntity<?> handleDroppedStatus(DroppedEnrollmentException ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IncompleteSubjectException.class)
+    public ResponseEntity<?> handleIncompleteSubject(IncompleteSubjectException ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DuplicateGradeException.class)
+    public ResponseEntity<?> handleDuplicateException(DuplicateGradeException ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
 }

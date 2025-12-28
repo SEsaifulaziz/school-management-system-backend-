@@ -3,8 +3,10 @@ package com.SMS.SchoolManagementSystem.controller;
 
 import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.CreateEnrollmentRequestDto;
 import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.EnrollmentResponseDto;
+import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.GradeUpdateRequestDto;
 import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.UpdateEnrollmentRequestDto;
 import com.SMS.SchoolManagementSystem.service.EnrollmentService;
+import jakarta.persistence.PersistenceUnit;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.Valid;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -51,6 +53,20 @@ public class EnrollmentController {
     public ResponseEntity<?> deleteById(Long id){
         enrollmentService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("id/{id}")
+    public ResponseEntity<?> updateStatus(@Valid @PathVariable Long id,
+                                    @Valid @RequestBody UpdateEnrollmentRequestDto updateEnrollmentRequestDto){
+        EnrollmentResponseDto updated = enrollmentService.updateEnrollmentStatus(id, updateEnrollmentRequestDto);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
+    }
+
+    @PutMapping("uid/{id}")
+    public ResponseEntity<?> updateGrade(@PathVariable Long id,
+                                         @Valid @RequestBody GradeUpdateRequestDto gradeUpdateRequestDto){
+        EnrollmentResponseDto updateGrade = enrollmentService.updateGradeStatus(id, gradeUpdateRequestDto);
+        return new ResponseEntity<>(updateGrade, HttpStatus.OK);
     }
 
 

@@ -2,18 +2,19 @@ package com.SMS.SchoolManagementSystem.service;
 
 import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.CreateEnrollmentRequestDto;
 import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.EnrollmentResponseDto;
+import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.GradeUpdateRequestDto;
 import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.UpdateEnrollmentRequestDto;
 import com.SMS.SchoolManagementSystem.entity.Enrollment;
 import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
 import com.SMS.SchoolManagementSystem.entity.Student;
 import com.SMS.SchoolManagementSystem.entity.Subject;
-import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.DuplicateEnrollmentException;
-import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.EnrollmentNotFoundException;
+import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.*;
 import com.SMS.SchoolManagementSystem.exception.StudentExceptions.StudentNotFoundException;
 import com.SMS.SchoolManagementSystem.exception.SubjectExceptions.SubjectNotFoundException;
 import com.SMS.SchoolManagementSystem.repository.EnrollmentRepository;
 import com.SMS.SchoolManagementSystem.repository.StudentRepository;
 import com.SMS.SchoolManagementSystem.repository.SubjectRepository;
+import jakarta.servlet.http.PushBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class EnrollmentService {
         return mapToResponse(enrollment);
     }
 
-    public EnrollmentResponseDto createEnrollment( CreateEnrollmentRequestDto request) {
+    public EnrollmentResponseDto createEnrollment(CreateEnrollmentRequestDto request) {
 
         Student student = studentRepo.findById(request.getStudentId())
                 .orElseThrow(() -> new StudentNotFoundException(request.getStudentId()));
@@ -62,8 +63,8 @@ public class EnrollmentService {
                 .orElseThrow(() -> new SubjectNotFoundException(request.getSubjectId()));
 
         boolean alreadyEnrolled = enrollmentRepo.existsByStudentAndSubject(student, subject);
-        if(alreadyEnrolled)
-                throw new DuplicateEnrollmentException(request.getStudentId(), request.getSubjectId());
+        if (alreadyEnrolled)
+            throw new DuplicateEnrollmentException(request.getStudentId(), request.getSubjectId());
 
         Enrollment enrollment = new Enrollment();
 
@@ -78,11 +79,77 @@ public class EnrollmentService {
 
     }
 
-    public void  deleteAll(){
+    public EnrollmentResponseDto updateEnrollmentStatus(Long id, UpdateEnrollmentRequestDto updateEnrollmentRequestDto /*EnrollmentStatusEnum newStatus*/) {
+
+        Enrollment enrollment = enrollmentRepo.findById(id)
+                .orElseThrow(() -> new EnrollmentNotFoundException(id));
+
+
+
+        if (enrollment.getStatus() == updateEnrollmentRequestDto.getStatus()) {
+            throw new AlreadyActiveException(updateEnrollmentRequestDto.getStatus());
+//            throw new RuntimeException("Enrollment already in this status");
+        }
+
+        if (enrollment.getStatus() == EnrollmentStatusEnum.DROPPED ||
+                enrollment.getStatus() == EnrollmentStatusEnum.COMPLETED) {
+            throw new InvalidStatusException(enrollment.getStatus(), updateEnrollmentRequestDto.getStatus());
+//            throw new RuntimeException("Cannot change status form " + enrollment.getStatus() + " to" + updateEnrollmentRequestDto.getStatus());
+        }
+
+        enrollment.setStatus(updateEnrollmentRequestDto.getStatus());
+        Enrollment updatedStatus = enrollmentRepo.save(enrollment);
+
+        return mapToResponse(updatedStatus);
+
+//        EnrollmentStatusEnum currentStatus = enrollment.getStatus();
+//        if (currentStatus == newStatus) {
+//            throw new RuntimeException("Enrollment is already in this status");
+//        }
+//
+//        if (currentStatus == EnrollmentStatusEnum.DROPPED ||
+//                currentStatus == EnrollmentStatusEnum.COMPLETED) {
+//            throw new RuntimeException(
+//                    "Cannot change status from " + currentStatus + " to " + newStatus + " status"
+//            );
+//        }
+//
+//        enrollment.setStatus(newStatus);
+//
+//        Enrollment updatedEnrollment = enrollmentRepo.save(enrollment);
+//
+//        return mapToResponse(updatedEnrollment);
+    }
+
+    public EnrollmentResponseDto updateGradeStatus(Long id, GradeUpdateRequestDto updateRequestDto){
+        Enrollment enrollment = enrollmentRepo.findById(id)
+                .orElseThrow(() -> new EnrollmentNotFoundException(id));
+
+        if (enrollment.getFinalGrade().equals(updateRequestDto.getFinalGrade())){
+            throw new DuplicateGradeException(id, updateRequestDto.getFinalGrade());
+        }
+
+        if(enrollment.getStatus() == EnrollmentStatusEnum.ACTIVE){
+            throw new IncompleteSubjectException(enrollment.getStatus());
+        }
+
+        if (enrollment.getStatus() == EnrollmentStatusEnum.DROPPED){
+            throw new DroppedEnrollmentException(enrollment.getStatus());
+        }
+
+
+        enrollment.setFinalGrade(updateRequestDto.getFinalGrade());
+        Enrollment updated = enrollmentRepo.save(enrollment);
+
+        return mapToResponse(updated);
+
+    }
+
+    public void deleteAll() {
         enrollmentRepo.deleteAll();
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         enrollmentRepo.deleteById(id);
     }
 

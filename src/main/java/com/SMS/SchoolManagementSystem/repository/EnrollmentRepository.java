@@ -1,6 +1,7 @@
 package com.SMS.SchoolManagementSystem.repository;
 
 import com.SMS.SchoolManagementSystem.entity.Enrollment;
+import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
 import com.SMS.SchoolManagementSystem.entity.Student;
 import com.SMS.SchoolManagementSystem.entity.Subject;
 import io.swagger.v3.core.jackson.mixin.Schema31Mixin;
@@ -14,6 +15,7 @@ import java.util.List;
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
     List<Enrollment> findByStudentId(Long id);
+    Enrollment findByStatus(EnrollmentStatusEnum statusEnum);
     boolean existsByStudentAndSubject(Student studentId, Subject subject);
 
     boolean existsByEnrollmentId(Long id);

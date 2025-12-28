@@ -10,6 +10,7 @@ import com.SMS.SchoolManagementSystem.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepo;
 
-    public List<StudentResponseDto> getAll(){
+    public List<StudentResponseDto> getAll() {
         List<Student> students = studentRepo.findAll();
         List<StudentResponseDto> responses = new ArrayList<>();
 
@@ -29,23 +30,22 @@ public class StudentService {
 //            responses.add(mapToResponse(student));
 //        }
 
-        for(Student student: students){
+        for (Student student : students) {
             StudentResponseDto response = mapToResponse(student);
             responses.add(response);
         }
         return responses;
     }
 
-    public StudentResponseDto findById(Long id){
+    public StudentResponseDto findById(Long id) {
         Student student = studentRepo.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException(id));
         return mapToResponse(student);
     }
 
 
-
-    public StudentResponseDto createStudent(CreateStudentRequestDto req){
-        if(studentRepo.existsByEmail(req.getEmail()))
+    public StudentResponseDto createStudent(CreateStudentRequestDto req) {
+        if (studentRepo.existsByEmail(req.getEmail()))
             throw new DuplicateEmailException(req.getEmail());
 
         Student student = new Student();
@@ -54,30 +54,31 @@ public class StudentService {
         student.setEmail(req.getEmail());
         student.setEnrolledGrade(req.getEnrolledGrade());
 
-        Student saved =  studentRepo.save(student);
+        Student saved = studentRepo.save(student);
 
         return mapToResponse(saved);
     }
 
-    public Student deleteById(Long id){
+    public Student deleteById(Long id) {
         studentRepo.deleteById(id);
         return null;
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         studentRepo.deleteAll();
     }
 
-    public StudentResponseDto updateStudent(Long id, UpdateStudentRequestDto updateRequest){
+    public StudentResponseDto updateStudent(Long id, UpdateStudentRequestDto updateRequest) {
         Student student = studentRepo.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException(id));
 
         // check email conflict ONLY if email is changed
-        if(!student.getEmail().equals(updateRequest.getEmail())){
-            if(studentRepo.existsByEmail(updateRequest.getEmail())){
+        if (!student.getEmail().equals(updateRequest.getEmail())) {
+            if (studentRepo.existsByEmail(updateRequest.getEmail())) {
                 throw new DuplicateEmailException(updateRequest.getEmail());
             }
         }
+
         student.setFirstName(updateRequest.getFirstName());
         student.setLastName(updateRequest.getLastName());
         student.setEmail(updateRequest.getEmail());
@@ -88,7 +89,7 @@ public class StudentService {
         return mapToResponse(updatedStudent);
     }
 
-    private StudentResponseDto mapToResponse (Student student){
+    private StudentResponseDto mapToResponse(Student student) {
         StudentResponseDto response = new StudentResponseDto();
         response.setId(student.getId());
         response.setFirstName(student.getFirstName());
@@ -97,17 +98,6 @@ public class StudentService {
         response.setEnrolledGrade(student.getEnrolledGrade());
         return response;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

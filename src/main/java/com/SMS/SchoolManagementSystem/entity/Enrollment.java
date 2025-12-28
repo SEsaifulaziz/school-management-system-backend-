@@ -4,6 +4,7 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -28,13 +29,13 @@ public class Enrollment {
     // ---------------- Relationships ----------------
 
 //    @Valid
-    @NotBlank(message = "must no be blink")
+    @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name =  "student_id")
     private Student student;
 
 //    @Valid
-    @NotBlank(message = "must no be blink")
+    @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "subject_id")
     private Subject subject;

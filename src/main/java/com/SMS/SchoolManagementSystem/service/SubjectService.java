@@ -22,29 +22,29 @@ public class SubjectService {
     private SubjectRepository subjectRepo;
 
 
-    public List<SubjectResponseDto> getAll(){
+    public List<SubjectResponseDto> getAll() {
 
         List<Subject> subjects = subjectRepo.findAll();
         List<SubjectResponseDto> responses = new ArrayList<>();
 
-        for(Subject subject : subjects) {
+        for (Subject subject : subjects) {
             SubjectResponseDto response = mapToResponse(subject);
             responses.add(response);
         }
         return responses;
     }
 
-    public SubjectResponseDto findById(Long id){
+    public SubjectResponseDto findById(Long id) {
 
         Subject subject = subjectRepo.findById(id)
-                .orElseThrow(()-> new SubjectNotFoundException(id));
+                .orElseThrow(() -> new SubjectNotFoundException(id));
 
         return mapToResponse(subject);
     }
 
-    public SubjectResponseDto createSubject(CreateSubjectRequestDto req){
+    public SubjectResponseDto createSubject(CreateSubjectRequestDto req) {
 
-        if(subjectRepo.existsByCode(req.getCode()))
+        if (subjectRepo.existsByCode(req.getCode()))
             throw new DuplicateCodeException(req.getCode());
 
         Subject subject = new Subject();
@@ -60,17 +60,17 @@ public class SubjectService {
 
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
 
         subjectRepo.deleteById(id);
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
 
         subjectRepo.deleteAll();
     }
 
-    public SubjectResponseDto updateStudentRequestDto(Long id, UpdateSubjectRequestDto updateRequest){
+    public SubjectResponseDto updateStudentRequestDto(Long id, UpdateSubjectRequestDto updateRequest) {
 
         Subject subject = subjectRepo.findById(id)
                 .orElseThrow(() -> new SubjectNotFoundException(id));
@@ -98,10 +98,6 @@ public class SubjectService {
         return response;
 
     }
-
-
-
-
 
 
 }
