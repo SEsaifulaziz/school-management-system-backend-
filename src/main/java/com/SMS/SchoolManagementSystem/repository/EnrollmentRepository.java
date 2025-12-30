@@ -4,8 +4,7 @@ import com.SMS.SchoolManagementSystem.entity.Enrollment;
 import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
 import com.SMS.SchoolManagementSystem.entity.Student;
 import com.SMS.SchoolManagementSystem.entity.Subject;
-import io.swagger.v3.core.jackson.mixin.Schema31Mixin;
-import jakarta.validation.constraints.NotBlank;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +13,11 @@ import java.util.List;
 @Component
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
-    List<Enrollment> findByStudentId(Long id);
-    Enrollment findByStatus(EnrollmentStatusEnum statusEnum);
+    List<Enrollment> findBySubject(Subject subjectId);
+    List<Enrollment> findByStudent(Student studentId);
+    List<Enrollment> findByStudentAndStatus(Student StudentId, EnrollmentStatusEnum statusEnum);
+    List<Enrollment> findByStudentAndStatusIn(Student studentId, List<EnrollmentStatusEnum> statuses);
     boolean existsByStudentAndSubject(Student studentId, Subject subject);
+//    Enrollment findByStudentOrderByEnrollmentDataDesc(Long id, Enrollment enrollment);
 
-    boolean existsByEnrollmentId(Long id);
-
-//    Enrollment findByStudentIdAndSubject(Long studentId, Long subjectId);
-
-//    void deleteByStudentId(Long id);
-}
+    }

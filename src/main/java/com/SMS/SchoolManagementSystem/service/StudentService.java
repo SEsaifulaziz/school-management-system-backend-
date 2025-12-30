@@ -8,7 +8,6 @@ import com.SMS.SchoolManagementSystem.exception.StudentExceptions.DuplicateEmail
 import com.SMS.SchoolManagementSystem.exception.StudentExceptions.StudentNotFoundException;
 import com.SMS.SchoolManagementSystem.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,8 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentService {
 
-    @Autowired
-    private StudentRepository studentRepo;
+
+    private final StudentRepository studentRepo;
 
     public List<StudentResponseDto> getAll() {
         List<Student> students = studentRepo.findAll();

@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UpdateEnrollmentRequestDto {
 
-    @NotNull(message = "Enrollment status id required")
+    @NotNull(message = "Enrollment status is required")
     private EnrollmentStatusEnum status;
 
 }

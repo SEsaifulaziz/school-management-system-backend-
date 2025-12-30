@@ -68,15 +68,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleValidation(MethodArgumentNotValidException ex){
-        Map<String, String> errors = new HashMap<>();
-        for(FieldError fieldError : ex.getBindingResult().getFieldErrors()){
-            errors.put(fieldError.getField(), fieldError.getDefaultMessage());
-        }
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(InvalidStatusException.class)
     public ResponseEntity<?> handleInvalidStatus(InvalidStatusException ex){
         Map<String, String> error = new HashMap<>();
@@ -103,6 +94,15 @@ public class GlobalExceptionHandler {
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleValidation(MethodArgumentNotValidException ex){
+        Map<String, String> errors = new HashMap<>();
+        for(FieldError fieldError : ex.getBindingResult().getFieldErrors()){
+            errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -8,7 +8,6 @@ import com.SMS.SchoolManagementSystem.exception.SubjectExceptions.DuplicateCodeE
 import com.SMS.SchoolManagementSystem.exception.SubjectExceptions.SubjectNotFoundException;
 import com.SMS.SchoolManagementSystem.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,8 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SubjectService {
 
-    @Autowired
-    private SubjectRepository subjectRepo;
+    private final SubjectRepository subjectRepo;
 
 
     public List<SubjectResponseDto> getAll() {

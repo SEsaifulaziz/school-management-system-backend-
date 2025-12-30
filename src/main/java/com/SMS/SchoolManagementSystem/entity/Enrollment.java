@@ -1,14 +1,11 @@
 package com.SMS.SchoolManagementSystem.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -28,13 +25,12 @@ public class Enrollment {
 
     // ---------------- Relationships ----------------
 
-//    @Valid
     @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name =  "student_id")
     private Student student;
 
-//    @Valid
+
     @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "subject_id")
@@ -43,7 +39,7 @@ public class Enrollment {
     // ---------------- Lifecycle ----------------
 
     @Column(nullable = false)
-    private LocalDateTime enrollmentDate;
+    private LocalDate enrollmentDate;
 
     // ---------------- Relationships ----------------
 

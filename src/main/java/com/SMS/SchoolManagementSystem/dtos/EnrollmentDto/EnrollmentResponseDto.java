@@ -4,7 +4,7 @@ import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @RequiredArgsConstructor
@@ -18,7 +18,7 @@ public class EnrollmentResponseDto {
     private Long subjectId;
     private String subjectName;
 
-    private LocalDateTime enrollmentDate;
+    private LocalDate enrollmentDate;
     private EnrollmentStatusEnum status;
     private String finalGrade;
 

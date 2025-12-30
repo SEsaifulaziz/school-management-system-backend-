@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GradeUpdateRequestDto {
 
-    @NotBlank(message = "Final grade id required")
+    @NotBlank(message = "Final grade is required")
     private String finalGrade;
 
 
