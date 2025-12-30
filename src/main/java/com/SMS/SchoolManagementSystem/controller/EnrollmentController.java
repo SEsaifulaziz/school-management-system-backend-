@@ -17,81 +17,81 @@ import java.util.List;
 import java.util.logging.Level;
 
 @RestController
-@RequestMapping("/enrollments")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class EnrollmentController {
 
     private final EnrollmentService enrollmentService;
 
 
-    @PostMapping
+    @PostMapping("/addEnrollment")
     public ResponseEntity<?> createEnrollment(@Valid @RequestBody CreateEnrollmentRequestDto request){
         EnrollmentResponseDto saved = enrollmentService.createEnrollment(request);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/getAllEnrollments")
     public ResponseEntity<?> findAll(){
         List<EnrollmentResponseDto> getAll = enrollmentService.getAll();
         return new ResponseEntity<>(getAll, HttpStatus.OK);
     }
 
-    @GetMapping("id/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         EnrollmentResponseDto findById = enrollmentService.findById(id);
         return new ResponseEntity<>(findById, HttpStatus.OK);
     }
 
-    @GetMapping("id/{id}/studentId")
+    @GetMapping("/getByStudentId/{id}")
     public ResponseEntity<?> getByStudentId(@PathVariable Long id){
         List<EnrollmentResponseDto> getBySId = enrollmentService.getEnrollmentsByStudentId(id);
         return new ResponseEntity<>(getBySId, HttpStatus.OK);
     }
 
-    @GetMapping("id/{id}/subjectId")
+    @GetMapping("/getBySubjectId/{id}")
     public ResponseEntity<?> getBySubjectId(@PathVariable Long id){
         List<EnrollmentResponseDto> getById = enrollmentService.getEnrollmentsBySubjectId(id);
         return new ResponseEntity<>(getById, HttpStatus.OK);
     }
 
-    @GetMapping("id/{id}/ActiveStatus")
+    @GetMapping("/GetByStudentId/{id}/ActiveStatus")
     public ResponseEntity<?> getStudentAndActiveStatus(@PathVariable Long id){
         List<EnrollmentResponseDto> getStatus = enrollmentService.getActiveEnrollmentsByStudentId(id);
         return new ResponseEntity<>(getStatus, HttpStatus.OK);
     }
 
-    @GetMapping("id/{id}/CompletedStatus")
+    @GetMapping("getByStudentId/{id}/CompletedStatus")
     public ResponseEntity<?> getStudentAndCompletedStatus(@PathVariable Long id){
         List<EnrollmentResponseDto> getStatus = enrollmentService.getCompletedEnrollmentsByStudent(id);
         return new ResponseEntity<>(getStatus, HttpStatus.OK);
     }
 
-    @GetMapping("id/{id}/DroppedStatus")
+    @GetMapping("getByStudentId/{id}/DroppedStatus")
     public ResponseEntity<?> getStudentAndDroppedStatus(@PathVariable Long id){
         List<EnrollmentResponseDto> getStatus = enrollmentService.getDroppedEnrollmentsByStudent(id);
         return new ResponseEntity<>(getStatus, HttpStatus.OK);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/deleteAll")
     public ResponseEntity<?> deleteAll(){
         enrollmentService.deleteAll();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("id/{id}")
+    @DeleteMapping("/deleteById/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id){
         enrollmentService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("id/{id}/status")
+    @PutMapping("updateStatus/{id}")
     public ResponseEntity<?> updateStatus(@Valid @PathVariable Long id,
                                     @Valid @RequestBody UpdateEnrollmentRequestDto updateEnrollmentRequestDto){
         EnrollmentResponseDto updated = enrollmentService.updateEnrollmentStatus(id, updateEnrollmentRequestDto);
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
-    @PutMapping("id/{id}/grade")
+    @PutMapping("updateGrade/{id}")
     public ResponseEntity<?> updateGrade(@PathVariable Long id,
                                          @Valid @RequestBody GradeUpdateRequestDto gradeUpdateRequestDto){
         EnrollmentResponseDto updateGrade = enrollmentService.updateGradeStatus(id, gradeUpdateRequestDto);
