@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Level;
 
 @RestController
 @RequestMapping("/enrollments")
@@ -53,17 +54,23 @@ public class EnrollmentController {
         return new ResponseEntity<>(getById, HttpStatus.OK);
     }
 
-    @GetMapping("id/{id}/status")
-    public ResponseEntity<?> getStudentAndStatus(@PathVariable Long id){
-        List<EnrollmentResponseDto> getStatus = enrollmentService.getByStatus(id);
+    @GetMapping("id/{id}/ActiveStatus")
+    public ResponseEntity<?> getStudentAndActiveStatus(@PathVariable Long id){
+        List<EnrollmentResponseDto> getStatus = enrollmentService.getActiveEnrollmentsByStudentId(id);
         return new ResponseEntity<>(getStatus, HttpStatus.OK);
     }
 
-//    @GetMapping("id/{id}/status")
-//    public ResponseEntity<?> getStudentAndStatuses(@PathVariable Long id){
-//        List<EnrollmentResponseDto> getAllStatuses = enrollmentService.getByStatuses(id);
-//        return new ResponseEntity<>(getAllStatuses, HttpStatus.OK);
-//    }
+    @GetMapping("id/{id}/CompletedStatus")
+    public ResponseEntity<?> getStudentAndCompletedStatus(@PathVariable Long id){
+        List<EnrollmentResponseDto> getStatus = enrollmentService.getCompletedEnrollmentsByStudent(id);
+        return new ResponseEntity<>(getStatus, HttpStatus.OK);
+    }
+
+    @GetMapping("id/{id}/DroppedStatus")
+    public ResponseEntity<?> getStudentAndDroppedStatus(@PathVariable Long id){
+        List<EnrollmentResponseDto> getStatus = enrollmentService.getDroppedEnrollmentsByStudent(id);
+        return new ResponseEntity<>(getStatus, HttpStatus.OK);
+    }
 
     @DeleteMapping
     public ResponseEntity<?> deleteAll(){

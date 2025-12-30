@@ -17,12 +17,12 @@ import com.SMS.SchoolManagementSystem.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.lang.management.LockInfo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum.COMPLETED;
-
+import static com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum.*;
 
 @Service
 @RequiredArgsConstructor
@@ -75,11 +75,11 @@ public class EnrollmentService {
         return responses;
     }
 
-    public List<EnrollmentResponseDto> getByStatus(Long id){
+    public List<EnrollmentResponseDto> getActiveEnrollmentsByStudentId(Long id){
         Student student = studentRepo.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException(id));
 
-        List<Enrollment> enrollments = enrollmentRepo.findByStudentAndStatus(student, EnrollmentStatusEnum.ACTIVE);
+        List<Enrollment> enrollments = enrollmentRepo.findByStudentAndStatus(student, ACTIVE);
 
         List<EnrollmentResponseDto> responses = new ArrayList<>();
 
@@ -90,25 +90,35 @@ public class EnrollmentService {
         return responses;
     }
 
-//    public List<EnrollmentResponseDto> getByStatuses(Long id){
-//        Student student = studentRepo.findById(id)
-//                .orElseThrow(() -> new StudentNotFoundException(id));
-//
-//        EnrollmentStatusEnum[] enrollment1 = EnrollmentStatusEnum.values();
-//        enrollment1
-//
-//        List<Enrollment> enrollments = enrollmentRepo.findByStudentAndStatusIn(student, EnrollmentStatusEnum.ACTIVE, COMPLETED);
-//
-//        List<EnrollmentResponseDto> responses = new ArrayList<>();
-//
-//        for(Enrollment enrollment: enrollments){
-//            EnrollmentResponseDto responseDto = mapToResponse(enrollment);
-//            responses.add(responseDto);
-//        }
-//
-//        return responses;
-//    }
+    public List<EnrollmentResponseDto> getCompletedEnrollmentsByStudent(Long id){
+        Student student = studentRepo.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException(id));
 
+        List<Enrollment> enrollments = enrollmentRepo.findByStudentAndStatus(student, COMPLETED);
+
+        List<EnrollmentResponseDto> responses = new ArrayList<>();
+
+        for(Enrollment enrollment: enrollments) {
+            EnrollmentResponseDto responseDto = mapToResponse(enrollment);
+            responses.add(responseDto);
+        }
+        return responses;
+    }
+
+    public List<EnrollmentResponseDto> getDroppedEnrollmentsByStudent(Long id){
+        Student student = studentRepo.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException(id));
+
+        List<Enrollment> enrollments = enrollmentRepo.findByStudentAndStatus(student, DROPPED);
+
+        List<EnrollmentResponseDto> responses = new ArrayList<>();
+
+        for(Enrollment enrollment: enrollments){
+            EnrollmentResponseDto responseDto = mapToResponse(enrollment);
+            responses.add(responseDto);
+        }
+        return responses;
+    }
 
     public EnrollmentResponseDto findById(Long id) {
         Enrollment enrollment = enrollmentRepo.findById(id)
@@ -134,7 +144,7 @@ public class EnrollmentService {
         enrollment.setStudent(student);
         enrollment.setSubject(subject);
         enrollment.setEnrollmentDate(LocalDate.now());
-        enrollment.setStatus(EnrollmentStatusEnum.ACTIVE);
+        enrollment.setStatus(ACTIVE);
 
         Enrollment saved = enrollmentRepo.save(enrollment);
 
@@ -152,7 +162,7 @@ public class EnrollmentService {
         }
 
         if (enrollment.getStatus() == EnrollmentStatusEnum.DROPPED ||
-                enrollment.getStatus() == EnrollmentStatusEnum.COMPLETED) {
+                enrollment.getStatus() == COMPLETED) {
             throw new InvalidStatusException(enrollment.getStatus(), updateEnrollmentRequestDto.getStatus());
         }
 
@@ -170,7 +180,7 @@ public class EnrollmentService {
             throw new DuplicateGradeException(id, enrollment.getFinalGrade());
         }
 
-        if (enrollment.getStatus() == EnrollmentStatusEnum.ACTIVE) {
+        if (enrollment.getStatus() == ACTIVE) {
             throw new IncompleteSubjectException(enrollment.getStatus());
         }
 
