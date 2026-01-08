@@ -5,6 +5,7 @@ import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.CreateAttendanceRequest
 import com.SMS.SchoolManagementSystem.entity.Attendance;
 import com.SMS.SchoolManagementSystem.entity.Enrollment;
 import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
+import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.AttendanceNotFound;
 import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.CompletedException;
 import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.DroppedAttendanceException;
 import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.DuplicateDateException;
@@ -37,6 +38,12 @@ public class AttendanceService {
             responses.add(attendanceResponse);
         }
         return responses;
+    }
+
+    public AttendanceResponseDto findById(Long id) {
+        Attendance attendance = attendanceRepo.findById(id)
+                .orElseThrow(() -> new AttendanceNotFound(id));
+        return mapToResponse(attendance);
     }
 
     public AttendanceResponseDto createAttendance(CreateAttendanceRequestDto request) {

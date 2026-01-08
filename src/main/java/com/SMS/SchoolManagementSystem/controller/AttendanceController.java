@@ -32,4 +32,10 @@ public class AttendanceController {
         List<AttendanceResponseDto> getAll = attendanceService.getAllAttendance();
         return new ResponseEntity<>(getAll, HttpStatus.OK);
     }
+
+    @GetMapping("/getAttendanceById/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id){
+        AttendanceResponseDto getById = attendanceService.findById(id);
+        return new ResponseEntity<>(getById, HttpStatus.OK);
+    }
 }
