@@ -42,7 +42,6 @@ public class StudentService {
         return mapToResponse(student);
     }
 
-
     public StudentResponseDto createStudent(CreateStudentRequestDto req) {
         if (studentRepo.existsByEmail(req.getEmail()))
             throw new DuplicateEmailException(req.getEmail());
@@ -97,6 +96,4 @@ public class StudentService {
         response.setEnrolledGrade(student.getEnrolledGrade());
         return response;
     }
-
-
 }

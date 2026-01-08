@@ -5,7 +5,6 @@ import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.CreateEnrollmentRequest
 import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.EnrollmentResponseDto;
 import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.GradeUpdateRequestDto;
 import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.UpdateEnrollmentRequestDto;
-import com.SMS.SchoolManagementSystem.entity.Student;
 import com.SMS.SchoolManagementSystem.service.EnrollmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.logging.Level;
 
 @RestController
 @RequestMapping("/api")

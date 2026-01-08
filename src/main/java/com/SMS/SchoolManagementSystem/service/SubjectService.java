@@ -19,7 +19,6 @@ public class SubjectService {
 
     private final SubjectRepository subjectRepo;
 
-
     public List<SubjectResponseDto> getAll() {
 
         List<Subject> subjects = subjectRepo.findAll();
@@ -55,11 +54,9 @@ public class SubjectService {
         Subject saved = subjectRepo.save(subject);
 
         return mapToResponse(saved);
-
     }
 
     public void deleteById(Long id) {
-
         subjectRepo.deleteById(id);
     }
 
@@ -68,7 +65,9 @@ public class SubjectService {
         subjectRepo.deleteAll();
     }
 
-    public SubjectResponseDto updateStudentRequestDto(Long id, UpdateSubjectRequestDto updateRequest) {
+    public SubjectResponseDto updateStudentRequestDto(Long id,
+                                                      UpdateSubjectRequestDto
+                                                              updateRequest) {
 
         Subject subject = subjectRepo.findById(id)
                 .orElseThrow(() -> new SubjectNotFoundException(id));
@@ -96,6 +95,4 @@ public class SubjectService {
         return response;
 
     }
-
-
 }

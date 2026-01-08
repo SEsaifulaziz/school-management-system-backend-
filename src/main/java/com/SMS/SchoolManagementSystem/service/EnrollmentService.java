@@ -17,7 +17,6 @@ import com.SMS.SchoolManagementSystem.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.lang.management.LockInfo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,7 +151,9 @@ public class EnrollmentService {
 
     }
 
-    public EnrollmentResponseDto updateEnrollmentStatus(Long id, UpdateEnrollmentRequestDto updateEnrollmentRequestDto ) {
+    public EnrollmentResponseDto updateEnrollmentStatus(Long id,
+                                                        UpdateEnrollmentRequestDto
+                                                                updateEnrollmentRequestDto ) {
 
         Enrollment enrollment = enrollmentRepo.findById(id)
                 .orElseThrow(() -> new EnrollmentNotFoundException(id));
