@@ -5,7 +5,11 @@ import jakarta.validation.constraints.NotNull;
 
 public class InvalidStatusException extends RuntimeException{
     public InvalidStatusException(EnrollmentStatusEnum enrollmentStatusEnum,
-                                  @NotNull(message = "Enrollment status id required") EnrollmentStatusEnum updateEnrollmentRequestDto){
-        super("Cannot change status from " + enrollmentStatusEnum + " status to " + updateEnrollmentRequestDto);
+                                  @NotNull(message = "Enrollment status id required")
+                                  EnrollmentStatusEnum updateEnrollmentRequestDto){
+
+        super("Cannot change status from " +
+                enrollmentStatusEnum + " status to " +
+                updateEnrollmentRequestDto);
     }
 }

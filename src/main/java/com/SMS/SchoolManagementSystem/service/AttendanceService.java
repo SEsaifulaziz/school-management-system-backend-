@@ -5,7 +5,9 @@ import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.CreateAttendanceRequest
 import com.SMS.SchoolManagementSystem.entity.Attendance;
 import com.SMS.SchoolManagementSystem.entity.Enrollment;
 import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
-import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.DroppedEnrollmentException;
+import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.CompletedException;
+import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.DroppedAttendanceException;
+import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.DuplicateDateException;
 import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.EnrollmentNotFoundException;
 import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.UnActiveEnrollmentException;
 import com.SMS.SchoolManagementSystem.repository.AttendanceRepository;
@@ -38,17 +40,26 @@ public class AttendanceService {
     }
 
     public AttendanceResponseDto createAttendance(CreateAttendanceRequestDto request) {
+        Attendance attendance = new Attendance();
+
         Enrollment enrollment = enrollmentRepo.findById(request.getEnrollmentId())
                 .orElseThrow(() -> new EnrollmentNotFoundException(request.getEnrollmentId()));
 
-        if(enrollment.getStatus() != EnrollmentStatusEnum.ACTIVE){
-            if(enrollment.getStatus() == EnrollmentStatusEnum.DROPPED){
-                throw new DroppedEnrollmentException(enrollment.getStatus());
+
+        if(enrollment.getStatus() == EnrollmentStatusEnum.COMPLETED){
+            if(enrollment.getStatus() != EnrollmentStatusEnum.ACTIVE){
+                if(enrollment.getStatus() == EnrollmentStatusEnum.DROPPED){
+                    throw new DroppedAttendanceException(enrollment.getStatus());
+                }
+                throw new UnActiveEnrollmentException(enrollment.getStatus());
             }
-            throw new UnActiveEnrollmentException(enrollment.getStatus());
+            throw new CompletedException(enrollment.getStatus());
         }
 
-        Attendance attendance = new Attendance();
+        if(attendanceRepo.existsByAttendanceDate(LocalDate.now())) {
+            throw new DuplicateDateException(LocalDate.now());
+        }
+
         attendance.setEnrollment(enrollment);
         attendance.setAttendanceDate(LocalDate.now());
         attendance.setMarkedAt(LocalTime.now());
@@ -59,13 +70,12 @@ public class AttendanceService {
     }
 
 
-
-
     private AttendanceResponseDto mapToResponse(Attendance attendance) {
 
         AttendanceResponseDto response = new AttendanceResponseDto();
 
         response.setAttendanceId(attendance.getId());
+        response.setEnrollmentId(attendance.getEnrollment().getEnrollmentId());
         response.setStudentId(attendance.getEnrollment().getStudent().getId());
         response.setStudentName(attendance.getEnrollment().getStudent().getFirstName()
                 + " " + attendance.getEnrollment().getStudent().getLastName() );

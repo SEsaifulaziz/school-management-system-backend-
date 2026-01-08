@@ -1,6 +1,7 @@
 package com.SMS.SchoolManagementSystem.dtos.AttendanceDTO;
 
 import com.SMS.SchoolManagementSystem.entity.AttendenceEnum;
+import jakarta.persistence.Column;
 import lombok.Data;
 import jakarta.validation.constraints.NotNull;
 
@@ -14,4 +15,10 @@ public class CreateAttendanceRequestDto {
 
     @NotNull
     private AttendenceEnum status;
+
+    @NotNull
+    @Column(unique = true)
+    private LocalDate AttendanceDate;
+
+
 }

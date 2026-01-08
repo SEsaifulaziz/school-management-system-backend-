@@ -19,11 +19,13 @@ public class Attendance {
     private Enrollment enrollment;
 
     @NotNull
+    @Column(unique = true)
     LocalDate attendanceDate;
 
     @NotNull
     private LocalTime markedAt;
 
+    @NotNull
     private AttendenceEnum status;
 
 }

@@ -1,5 +1,8 @@
 package com.SMS.SchoolManagementSystem.exception;
 
+import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.CompletedException;
+import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.DroppedAttendanceException;
+import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.DuplicateDateException;
 import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.*;
 import com.SMS.SchoolManagementSystem.exception.StudentExceptions.DuplicateEmailException;
 import com.SMS.SchoolManagementSystem.exception.StudentExceptions.StudentNotFoundException;
@@ -107,6 +110,27 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UnActiveEnrollmentException.class)
     public ResponseEntity<?> handleUnActiveEnrollment(UnActiveEnrollmentException ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DroppedAttendanceException.class)
+    public ResponseEntity<?> handleDroppedAttendance(DroppedAttendanceException ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CompletedException.class)
+    public ResponseEntity<?> handleCompletedException(CompletedException ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DuplicateDateException.class)
+    public ResponseEntity<?> handleDuplicateDateException(DuplicateDateException ex){
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);

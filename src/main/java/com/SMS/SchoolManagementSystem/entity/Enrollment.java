@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @Table(
         name = "enrollments",
         uniqueConstraints = {
-
                 @UniqueConstraint(columnNames = {"student_id", "subject_id"})
         }
 )
