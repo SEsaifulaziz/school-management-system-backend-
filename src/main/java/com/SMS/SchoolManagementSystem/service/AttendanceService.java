@@ -66,6 +66,7 @@ public class AttendanceService {
         AttendanceResponseDto response = new AttendanceResponseDto();
 
         response.setAttendanceId(attendance.getId());
+        response.setStudentId(attendance.getEnrollment().getStudent().getId());
         response.setStudentName(attendance.getEnrollment().getStudent().getFirstName()
                 + " " + attendance.getEnrollment().getStudent().getLastName() );
         response.setSubjectName(attendance.getEnrollment().getSubject().getName());
