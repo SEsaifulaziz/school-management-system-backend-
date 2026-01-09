@@ -3,12 +3,10 @@ package com.SMS.SchoolManagementSystem.service;
 import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.AttendanceResponseDto;
 import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.CreateAttendanceRequestDto;
 import com.SMS.SchoolManagementSystem.entity.Attendance;
+import com.SMS.SchoolManagementSystem.entity.AttendenceEnum;
 import com.SMS.SchoolManagementSystem.entity.Enrollment;
 import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
-import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.AttendanceNotFound;
-import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.CompletedException;
-import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.DroppedAttendanceException;
-import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.DuplicateDateException;
+import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.*;
 import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.EnrollmentNotFoundException;
 import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.UnActiveEnrollmentException;
 import com.SMS.SchoolManagementSystem.repository.AttendanceRepository;
@@ -46,6 +44,24 @@ public class AttendanceService {
         return mapToResponse(attendance);
     }
 
+    public List<AttendanceResponseDto> findByDate(LocalDate date) {
+        List<Attendance> attendance = attendanceRepo.findAllByAttendanceDate(date);
+
+        List<AttendanceResponseDto> responses = new ArrayList<>();
+
+        for(Attendance attendances : attendance){
+
+            AttendanceResponseDto attendanceResponse = mapToResponse(attendances);
+
+//            if(!attendanceResponse.equals(" ") && attendanceResponse != null) {
+//                responses.add(attendanceResponse);
+//            }
+//            throw new EmptyAttendanceException(date);
+
+        }
+        return responses;
+    }
+
     public AttendanceResponseDto createAttendance(CreateAttendanceRequestDto request) {
         Attendance attendance = new Attendance();
 
@@ -64,7 +80,7 @@ public class AttendanceService {
         }
 
         if(attendanceRepo.existsByAttendanceDate(LocalDate.now())) {
-            throw new DuplicateDateException(LocalDate.now());
+            throw new DuplicateDateException(request.getEnrollmentId(), LocalDate.now());
         }
 
         attendance.setEnrollment(enrollment);

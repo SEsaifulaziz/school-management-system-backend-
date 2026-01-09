@@ -18,7 +18,7 @@ public class CreateAttendanceRequestDto {
 
     @NotNull
     @Column(unique = true)
-    private LocalDate AttendanceDate;
+    private LocalDate attendanceDate;
 
 
 }
