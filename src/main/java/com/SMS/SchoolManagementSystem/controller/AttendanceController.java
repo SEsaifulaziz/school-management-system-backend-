@@ -31,7 +31,7 @@ public class AttendanceController {
 
     @GetMapping("/getAllAttendances")
     public ResponseEntity<?> findAll(){
-        List<AttendanceResponseDto> getAll = attendanceService.getAllAttendance();
+        List<AttendanceResponseDto> getAll = attendanceService.findAllAttendance();
         return new ResponseEntity<>(getAll, HttpStatus.OK);
     }
 
@@ -46,4 +46,11 @@ public class AttendanceController {
         List<AttendanceResponseDto> getByDate = attendanceService.findByDate(date);
         return new ResponseEntity<>(getByDate, HttpStatus.OK);
     }
+
+    @DeleteMapping("/deleteAttendanceById/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id){
+        attendanceService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
+

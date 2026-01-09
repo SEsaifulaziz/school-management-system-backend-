@@ -27,7 +27,7 @@ public class AttendanceService {
     private final AttendanceRepository attendanceRepo;
     private final EnrollmentRepository enrollmentRepo;
 
-    public List<AttendanceResponseDto> getAllAttendance() {
+    public List<AttendanceResponseDto> findAllAttendance() {
         List<Attendance> attendances = attendanceRepo.findAll();
         List<AttendanceResponseDto> responses = new ArrayList<>();
 
@@ -63,7 +63,6 @@ public class AttendanceService {
     }
 
     public AttendanceResponseDto createAttendance(CreateAttendanceRequestDto request) {
-        Attendance attendance = new Attendance();
 
         Enrollment enrollment = enrollmentRepo.findById(request.getEnrollmentId())
                 .orElseThrow(() -> new EnrollmentNotFoundException(request.getEnrollmentId()));
@@ -79,10 +78,11 @@ public class AttendanceService {
             throw new CompletedException(enrollment.getStatus());
         }
 
-        if(attendanceRepo.existsByAttendanceDate(LocalDate.now())) {
+        if(attendanceRepo.existsByAttendanceDateAndEnrollment(LocalDate.now(), enrollment)) {
             throw new DuplicateDateException(request.getEnrollmentId(), LocalDate.now());
         }
 
+        Attendance attendance = new Attendance();
         attendance.setEnrollment(enrollment);
         attendance.setAttendanceDate(LocalDate.now());
         attendance.setMarkedAt(LocalTime.now());
@@ -93,6 +93,10 @@ public class AttendanceService {
     }
 
 
+    public void deleteById(Long id){
+        attendanceRepo.deleteById(id);
+    }
+    
     private AttendanceResponseDto mapToResponse(Attendance attendance) {
 
         AttendanceResponseDto response = new AttendanceResponseDto();
