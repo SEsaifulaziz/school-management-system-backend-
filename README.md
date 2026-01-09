@@ -7,8 +7,8 @@ This project focuses on learning real backend engineering concepts beyond basic 
 operations.
 ________________________________________
 
-## Features
-# Core Academic Domain
+# Features
+### Core Academic Domain
 
 # Student Management
   •	Create, update, delete, and fetch students
