@@ -96,6 +96,10 @@ public class AttendanceService {
     public void deleteById(Long id){
         attendanceRepo.deleteById(id);
     }
+
+    public void deleteAll(){
+        attendanceRepo.deleteAll();
+    }
     
     private AttendanceResponseDto mapToResponse(Attendance attendance) {
 

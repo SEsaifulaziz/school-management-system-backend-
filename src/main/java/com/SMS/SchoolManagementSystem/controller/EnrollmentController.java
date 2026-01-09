@@ -70,7 +70,7 @@ public class EnrollmentController {
         return new ResponseEntity<>(getStatus, HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteAll")
+    @DeleteMapping("/deleteAllEnrollments")
     public ResponseEntity<?> deleteAll(){
         enrollmentService.deleteAll();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

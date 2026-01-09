@@ -52,5 +52,11 @@ public class AttendanceController {
         attendanceService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/DeleteAllAttendances")
+    public ResponseEntity<?> deleteAll(){
+        attendanceService.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
 
