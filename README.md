@@ -11,6 +11,7 @@ ________________________________________
 ### Core Academic Domain
 
 ### Student Management
+
 • Create, update, delete, and fetch students
 •	Email uniqueness validation
 •	Field validation using Bean Validation
