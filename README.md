@@ -10,19 +10,19 @@ ________________________________________
 # Features
 ### Core Academic Domain
 
-# Student Management
+### Student Management
   •	Create, update, delete, and fetch students
   •	Email uniqueness validation
   •	Field validation using Bean Validation
   •	Global exception handling for invalid operations
 
-# Subject Management
+### Subject Management
   •	Create, update, delete, and fetch subjects
   •	Unique subject codes
   •	Grade-level based subjects
   •	Validation and duplicate prevention
 
-# Enrollment System
+### Enrollment System
   •	Enroll students into subjects
   • Prevent duplicate enrollments
   •	Lifecycle states:
@@ -34,7 +34,7 @@ ________________________________________
   •	Status transitions are validated
   •	Grade assignment with lifecycle validation
 
-# Attendance Management
+### Attendance Management
   •	Mark attendance for enrolled students
   •	Fetch attendance by ID and by date
   •	Fetch attendance history
@@ -44,7 +44,7 @@ ________________________________________
       •	Attendance cannot be marked for DROPPED enrollments
 ________________________________________
 
-# Architecture & Design
+### Architecture & Design
   •	Layered architecture (Controller → Service → Repository)
   •	DTO-based request and response models
   •	State-driven business rules
@@ -54,7 +54,7 @@ ________________________________________
   •	Relational data modeling with JPA
 ________________________________________
 
-# Tech Stack
+### Tech Stack
   •	Java
   •	Spring Boot
   •	Spring Data JPA
@@ -73,7 +73,7 @@ dtos          → Request & response models
 exception     → Custom exceptions & global handler
 ________________________________________
 
-# Domain Model
+### Domain Model
 Student → Enrollment → Attendance
 Subject → Enrollment → Attendance
   •	Students enroll in subjects through Enrollments
@@ -92,7 +92,7 @@ ________________________________________
   •	Enrollment lifecycle transitions are validated
 ________________________________________
 
-# API Capabilities
+### API Capabilities
 Students
   •	Create student
   •	Update student
@@ -101,7 +101,7 @@ Students
   •	Delete student
   •	Delete all students
 
-# Subjects
+### Subjects
   •	Create subject
   •	Update subject
   •	Get all subjects
@@ -109,7 +109,7 @@ Students
   •	Delete subject
   •	Delete all subjects
 
-# Enrollments 
+### Enrollments 
   •	Enroll student into subject
   •	Update enrollment status
   •	Assign final grade
@@ -118,7 +118,7 @@ Students
   •	Delete enrollment
   •	Enforce lifecycle rules
  
-# Attendance
+### Attendance
   •	Mark attendance
   •	Get attendance by ID
   • Get attendance by date
@@ -127,7 +127,7 @@ Students
   •	Prevent duplicates
 ________________________________________
 
-# Learning Goals of This Project
+### Learning Goals of This Project
 This project is built to practice:
   •	Backend architecture design
   •	State-based business logic
@@ -138,7 +138,7 @@ This project is built to practice:
   •	Database integrity protection
 ________________________________________
 
-# Future Enhancements
+### Future Enhancements
   •	Pagination and sorting
   •	Teacher management
   •	Authentication and role-based access
@@ -148,6 +148,6 @@ ________________________________________
   •	API documentation (Swagger)
 ________________________________________
 
-## Author
+# Author
 Saiful Aziz
 Backend Developer (Java & Spring Boot)
