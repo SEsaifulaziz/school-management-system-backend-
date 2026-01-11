@@ -2,7 +2,6 @@ package com.SMS.SchoolManagementSystem.controller;
 
 import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.AttendanceResponseDto;
 import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.CreateAttendanceRequestDto;
-import com.SMS.SchoolManagementSystem.entity.Attendance;
 import com.SMS.SchoolManagementSystem.service.AttendanceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +9,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.HandlerTypePredicate;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -46,6 +43,12 @@ public class AttendanceController {
         List<AttendanceResponseDto> getByDate = attendanceService.findByDate(date);
         return new ResponseEntity<>(getByDate, HttpStatus.OK);
     }
+
+//    @GetMapping("/getAttendanceByStudentId/{id}")
+//    public ResponseEntity<?> getAttendanceByStudentId(@PathVariable Long id){
+//        List<AttendanceResponseDto> getByStudentId = attendanceService.findByStudentId(id);
+//    }
+
 
     @DeleteMapping("/deleteAttendanceById/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id){

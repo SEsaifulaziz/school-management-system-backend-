@@ -19,7 +19,7 @@ public class Attendance {
     private Enrollment enrollment;
 
     @NotNull
-    @Column(unique = true)
+//    @Column(unique = true)
     LocalDate attendanceDate;
 
     @NotNull

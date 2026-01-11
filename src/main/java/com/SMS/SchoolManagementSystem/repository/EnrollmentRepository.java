@@ -12,7 +12,7 @@ import org.w3c.dom.ls.LSInput;
 import java.util.List;
 
 @Component
-public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
+public interface  EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
     List<Enrollment> findBySubject(Subject subjectId);
     List<Enrollment> findByStudent(Student studentId);

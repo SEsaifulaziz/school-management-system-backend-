@@ -3,12 +3,10 @@ package com.SMS.SchoolManagementSystem.service;
 import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.AttendanceResponseDto;
 import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.CreateAttendanceRequestDto;
 import com.SMS.SchoolManagementSystem.entity.Attendance;
-import com.SMS.SchoolManagementSystem.entity.AttendenceEnum;
 import com.SMS.SchoolManagementSystem.entity.Enrollment;
 import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
 import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.*;
 import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.EnrollmentNotFoundException;
-import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.UnActiveEnrollmentException;
 import com.SMS.SchoolManagementSystem.repository.AttendanceRepository;
 import com.SMS.SchoolManagementSystem.repository.EnrollmentRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +42,20 @@ public class AttendanceService {
         return mapToResponse(attendance);
     }
 
+//    public List<AttendanceResponseDto> findByStudentId(Long id) {
+//
+//        List<Enrollment> enrollment1 = enrollmentRepo.findByStudent(id);
+//
+//       List<Attendance> attendances = attendanceRepo.findAttendanceByStudentId(enrollment.getStudent().getId());
+//       List<AttendanceResponseDto> responses = new ArrayList<>();
+//
+//       for(Attendance attendance : attendances) {
+//           AttendanceResponseDto attendanceResponse = mapToResponse(attendance);
+//           responses.add(attendanceResponse);
+//       }
+//       return responses;
+//    }
+
     public List<AttendanceResponseDto> findByDate(LocalDate date) {
         List<Attendance> attendance = attendanceRepo.findAllByAttendanceDate(date);
 
@@ -52,9 +64,9 @@ public class AttendanceService {
         for(Attendance attendances : attendance){
 
             AttendanceResponseDto attendanceResponse = mapToResponse(attendances);
+            responses.add(attendanceResponse);
 
 //            if(!attendanceResponse.equals(" ") && attendanceResponse != null) {
-//                responses.add(attendanceResponse);
 //            }
 //            throw new EmptyAttendanceException(date);
 
@@ -63,26 +75,24 @@ public class AttendanceService {
     }
 
     public AttendanceResponseDto createAttendance(CreateAttendanceRequestDto request) {
+        Attendance attendance = new Attendance();
 
         Enrollment enrollment = enrollmentRepo.findById(request.getEnrollmentId())
                 .orElseThrow(() -> new EnrollmentNotFoundException(request.getEnrollmentId()));
 
 
         if(enrollment.getStatus() == EnrollmentStatusEnum.COMPLETED){
-            if(enrollment.getStatus() != EnrollmentStatusEnum.ACTIVE){
-                if(enrollment.getStatus() == EnrollmentStatusEnum.DROPPED){
-                    throw new DroppedAttendanceException(enrollment.getStatus());
-                }
-                throw new UnActiveEnrollmentException(enrollment.getStatus());
-            }
             throw new CompletedException(enrollment.getStatus());
+        }
+
+        if(enrollment.getStatus() == EnrollmentStatusEnum.DROPPED) {
+            throw new DroppedAttendanceException(enrollment.getStatus());
         }
 
         if(attendanceRepo.existsByAttendanceDateAndEnrollment(LocalDate.now(), enrollment)) {
             throw new DuplicateDateException(request.getEnrollmentId(), LocalDate.now());
         }
 
-        Attendance attendance = new Attendance();
         attendance.setEnrollment(enrollment);
         attendance.setAttendanceDate(LocalDate.now());
         attendance.setMarkedAt(LocalTime.now());

@@ -1,5 +1,6 @@
 package com.SMS.SchoolManagementSystem.exception;
 
+import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.AttendanceNotFound;
 import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.CompletedException;
 import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.DroppedAttendanceException;
 import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.DuplicateDateException;
@@ -134,6 +135,13 @@ public class GlobalExceptionHandler {
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AttendanceNotFound.class)
+    public ResponseEntity<?> handleAttendanceNotFound(AttendanceNotFound ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
 }
