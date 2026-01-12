@@ -5,10 +5,13 @@ import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.CreateAttendanceRequest
 import com.SMS.SchoolManagementSystem.entity.Attendance;
 import com.SMS.SchoolManagementSystem.entity.Enrollment;
 import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
+import com.SMS.SchoolManagementSystem.entity.Student;
 import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.*;
 import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.EnrollmentNotFoundException;
+import com.SMS.SchoolManagementSystem.exception.StudentExceptions.StudentNotFoundException;
 import com.SMS.SchoolManagementSystem.repository.AttendanceRepository;
 import com.SMS.SchoolManagementSystem.repository.EnrollmentRepository;
+import com.SMS.SchoolManagementSystem.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,7 @@ public class AttendanceService {
 
     private final AttendanceRepository attendanceRepo;
     private final EnrollmentRepository enrollmentRepo;
+    private final StudentRepository studentRepo;
 
     public List<AttendanceResponseDto> findAllAttendance() {
         List<Attendance> attendances = attendanceRepo.findAll();
@@ -42,19 +46,22 @@ public class AttendanceService {
         return mapToResponse(attendance);
     }
 
-//    public List<AttendanceResponseDto> findByStudentId(Long id) {
-//
-//        List<Enrollment> enrollment1 = enrollmentRepo.findByStudent(id);
-//
-//       List<Attendance> attendances = attendanceRepo.findAttendanceByStudentId(enrollment.getStudent().getId());
-//       List<AttendanceResponseDto> responses = new ArrayList<>();
-//
-//       for(Attendance attendance : attendances) {
-//           AttendanceResponseDto attendanceResponse = mapToResponse(attendance);
-//           responses.add(attendanceResponse);
-//       }
-//       return responses;
-//    }
+    public List<AttendanceResponseDto> findByStudentId(Long id) {
+
+        Student student = studentRepo.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException(id));
+
+        List<Enrollment> enrollment = enrollmentRepo.findByStudent(student);
+        List<Attendance> attendances = attendanceRepo.findAttendanceByEnrollmentIn(enrollment);
+
+               List<AttendanceResponseDto> responses = new ArrayList<>();
+
+       for(Attendance attendance : attendances) {
+           AttendanceResponseDto attendanceResponse = mapToResponse(attendance);
+           responses.add(attendanceResponse);
+       }
+       return responses;
+    }
 
     public List<AttendanceResponseDto> findByDate(LocalDate date) {
         List<Attendance> attendance = attendanceRepo.findAllByAttendanceDate(date);
@@ -102,7 +109,6 @@ public class AttendanceService {
         return mapToResponse(saved);
     }
 
-
     public void deleteById(Long id){
         attendanceRepo.deleteById(id);
     }
@@ -110,7 +116,8 @@ public class AttendanceService {
     public void deleteAll(){
         attendanceRepo.deleteAll();
     }
-    
+
+
     private AttendanceResponseDto mapToResponse(Attendance attendance) {
 
         AttendanceResponseDto response = new AttendanceResponseDto();

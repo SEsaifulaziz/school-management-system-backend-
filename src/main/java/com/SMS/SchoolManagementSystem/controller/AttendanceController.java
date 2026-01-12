@@ -44,10 +44,11 @@ public class AttendanceController {
         return new ResponseEntity<>(getByDate, HttpStatus.OK);
     }
 
-//    @GetMapping("/getAttendanceByStudentId/{id}")
-//    public ResponseEntity<?> getAttendanceByStudentId(@PathVariable Long id){
-//        List<AttendanceResponseDto> getByStudentId = attendanceService.findByStudentId(id);
-//    }
+    @GetMapping("/getAttendanceByStudentId/{id}")
+    public ResponseEntity<?> getAttendanceByStudentId(@PathVariable Long id){
+        List<AttendanceResponseDto> getByStudentId = attendanceService.findByStudentId(id);
+        return new ResponseEntity<>(getByStudentId, HttpStatus.OK);
+    }
 
 
     @DeleteMapping("/deleteAttendanceById/{id}")
