@@ -2,16 +2,15 @@ package com.SMS.SchoolManagementSystem.service;
 
 import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.AttendanceResponseDto;
 import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.CreateAttendanceRequestDto;
-import com.SMS.SchoolManagementSystem.entity.Attendance;
-import com.SMS.SchoolManagementSystem.entity.Enrollment;
-import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
-import com.SMS.SchoolManagementSystem.entity.Student;
+import com.SMS.SchoolManagementSystem.entity.*;
 import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.*;
 import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.EnrollmentNotFoundException;
 import com.SMS.SchoolManagementSystem.exception.StudentExceptions.StudentNotFoundException;
+import com.SMS.SchoolManagementSystem.exception.SubjectExceptions.SubjectNotFoundException;
 import com.SMS.SchoolManagementSystem.repository.AttendanceRepository;
 import com.SMS.SchoolManagementSystem.repository.EnrollmentRepository;
 import com.SMS.SchoolManagementSystem.repository.StudentRepository;
+import com.SMS.SchoolManagementSystem.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +27,7 @@ public class AttendanceService {
     private final AttendanceRepository attendanceRepo;
     private final EnrollmentRepository enrollmentRepo;
     private final StudentRepository studentRepo;
+    private final SubjectRepository subjectRepo;
 
     public List<AttendanceResponseDto> findAllAttendance() {
         List<Attendance> attendances = attendanceRepo.findAll();
@@ -54,13 +54,29 @@ public class AttendanceService {
         List<Enrollment> enrollment = enrollmentRepo.findByStudent(student);
         List<Attendance> attendances = attendanceRepo.findAttendanceByEnrollmentIn(enrollment);
 
-               List<AttendanceResponseDto> responses = new ArrayList<>();
+        List<AttendanceResponseDto> responses = new ArrayList<>();
 
        for(Attendance attendance : attendances) {
            AttendanceResponseDto attendanceResponse = mapToResponse(attendance);
            responses.add(attendanceResponse);
        }
        return responses;
+    }
+
+    public List<AttendanceResponseDto> findBySubjectId(Long id){
+
+        Subject subject = subjectRepo.findById(id)
+                .orElseThrow(() -> new SubjectNotFoundException(id));
+
+        List<Enrollment> enrollment = enrollmentRepo.findBySubject(subject);
+        List<Attendance> attendances = attendanceRepo.findAttendanceByEnrollmentIn(enrollment);
+
+        List<AttendanceResponseDto> responses = new ArrayList<>();
+
+        for(Attendance attendance : attendances){
+            responses.add(mapToResponse(attendance));
+        }
+        return responses;
     }
 
     public List<AttendanceResponseDto> findByDate(LocalDate date) {
@@ -128,6 +144,7 @@ public class AttendanceService {
         response.setStudentName(attendance.getEnrollment().getStudent().getFirstName()
                 + " " + attendance.getEnrollment().getStudent().getLastName() );
         response.setSubjectName(attendance.getEnrollment().getSubject().getName());
+        response.setSubjectId(attendance.getEnrollment().getSubject().getId());
         response.setStatus(attendance.getStatus());
         response.setDate(attendance.getAttendanceDate());
         response.setMarkedAt(attendance.getMarkedAt());

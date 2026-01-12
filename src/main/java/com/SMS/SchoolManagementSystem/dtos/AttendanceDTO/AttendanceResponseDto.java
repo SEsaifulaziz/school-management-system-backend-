@@ -15,6 +15,7 @@ public class AttendanceResponseDto {
     private Long enrollmentId;
     private Long studentId;
     private String studentName;
+    private Long subjectId;
     private String subjectName;
     private AttendenceEnum status;
     private LocalDate Date;

@@ -26,6 +26,7 @@ public class AttendanceController {
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
+
     @GetMapping("/getAllAttendances")
     public ResponseEntity<?> findAll(){
         List<AttendanceResponseDto> getAll = attendanceService.findAllAttendance();
@@ -48,6 +49,12 @@ public class AttendanceController {
     public ResponseEntity<?> getAttendanceByStudentId(@PathVariable Long id){
         List<AttendanceResponseDto> getByStudentId = attendanceService.findByStudentId(id);
         return new ResponseEntity<>(getByStudentId, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAttendaceBySubjectId/{id}")
+    public ResponseEntity<?> getAttendanceBySubjectId(@PathVariable Long id){
+        List<AttendanceResponseDto> getBySubjectId = attendanceService.findBySubjectId(id);
+        return new ResponseEntity<>(getBySubjectId, HttpStatus.OK);
     }
 
 
