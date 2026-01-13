@@ -59,24 +59,6 @@ public class EnrollmentController {
         return new ResponseEntity<>(getByStudentAndStatus, HttpStatus.OK);
     }
 
-    @GetMapping("/GetByStudentId/{id}/ActiveStatus")
-    public ResponseEntity<?> getStudentAndActiveStatus(@PathVariable Long id){
-        List<EnrollmentResponseDto> getStatus = enrollmentService.getActiveEnrollmentsByStudentId(id);
-        return new ResponseEntity<>(getStatus, HttpStatus.OK);
-    }
-
-    @GetMapping("getByStudentId/{id}/CompletedStatus")
-    public ResponseEntity<?> getStudentAndCompletedStatus(@PathVariable Long id){
-        List<EnrollmentResponseDto> getStatus = enrollmentService.getCompletedEnrollmentsByStudent(id);
-        return new ResponseEntity<>(getStatus, HttpStatus.OK);
-    }
-
-    @GetMapping("getByStudentId/{id}/DroppedStatus")
-    public ResponseEntity<?> getStudentAndDroppedStatus(@PathVariable Long id){
-        List<EnrollmentResponseDto> getStatus = enrollmentService.getDroppedEnrollmentsByStudent(id);
-        return new ResponseEntity<>(getStatus, HttpStatus.OK);
-    }
-
     @DeleteMapping("/deleteAllEnrollments")
     public ResponseEntity<?> deleteAll(){
         enrollmentService.deleteAll();

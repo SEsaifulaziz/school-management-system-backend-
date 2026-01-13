@@ -95,51 +95,6 @@ public class EnrollmentService {
 
     }
 
-    public List<EnrollmentResponseDto> getActiveEnrollmentsByStudentId(Long id){
-        Student student = studentRepo.findById(id)
-                .orElseThrow(() -> new StudentNotFoundException(id));
-
-        List<Enrollment> enrollments = enrollmentRepo.findByStudentAndStatus(student, ACTIVE);
-
-        List<EnrollmentResponseDto> responses = new ArrayList<>();
-
-        for(Enrollment enrollment: enrollments){
-            EnrollmentResponseDto responseDto = mapToResponse(enrollment);
-            responses.add(responseDto);
-        }
-        return responses;
-    }
-
-    public List<EnrollmentResponseDto> getCompletedEnrollmentsByStudent(Long id){
-        Student student = studentRepo.findById(id)
-                .orElseThrow(() -> new StudentNotFoundException(id));
-
-        List<Enrollment> enrollments = enrollmentRepo.findByStudentAndStatus(student, COMPLETED);
-
-        List<EnrollmentResponseDto> responses = new ArrayList<>();
-
-        for(Enrollment enrollment: enrollments) {
-            EnrollmentResponseDto responseDto = mapToResponse(enrollment);
-            responses.add(responseDto);
-        }
-        return responses;
-    }
-
-    public List<EnrollmentResponseDto> getDroppedEnrollmentsByStudent(Long id){
-        Student student = studentRepo.findById(id)
-                .orElseThrow(() -> new StudentNotFoundException(id));
-
-        List<Enrollment> enrollments = enrollmentRepo.findByStudentAndStatus(student, DROPPED);
-
-        List<EnrollmentResponseDto> responses = new ArrayList<>();
-
-        for(Enrollment enrollment: enrollments){
-            EnrollmentResponseDto responseDto = mapToResponse(enrollment);
-            responses.add(responseDto);
-        }
-        return responses;
-    }
-
     public EnrollmentResponseDto findById(Long id) {
         Enrollment enrollment = enrollmentRepo.findById(id)
                 .orElseThrow(() -> new EnrollmentNotFoundException(id));
