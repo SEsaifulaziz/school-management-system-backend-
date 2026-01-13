@@ -55,7 +55,7 @@ public class EnrollmentController {
 
     @GetMapping("/getByStudentAndStatus/{id}/status/{status}")
     public ResponseEntity<?> getByStudentAndStatus(@PathVariable Long id, @PathVariable EnrollmentStatusEnum status){
-        List<EnrollmentResponseDto> getByStudentAndStatus = enrollmentService.getByStudentAndStatuses(id, status);
+        List<EnrollmentResponseDto> getByStudentAndStatus = enrollmentService.getByStudentAndStatus(id, status);
         return new ResponseEntity<>(getByStudentAndStatus, HttpStatus.OK);
     }
 

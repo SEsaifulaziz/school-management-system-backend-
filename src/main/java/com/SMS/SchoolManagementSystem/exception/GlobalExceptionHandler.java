@@ -72,8 +72,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(InvalidStatusException.class)
-    public ResponseEntity<?> handleInvalidStatus(InvalidStatusException ex){
+    @ExceptionHandler(InvalidStatusConversionException.class)
+    public ResponseEntity<?> handleInvalidStatus(InvalidStatusConversionException ex){
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
@@ -114,6 +114,13 @@ public class GlobalExceptionHandler {
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(StatusNotFoundException.class)
+    public ResponseEntity<?> handleStatusNotFound(StatusNotFoundException ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new  ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DroppedAttendanceException.class)

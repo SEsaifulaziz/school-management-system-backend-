@@ -74,11 +74,15 @@ public class EnrollmentService {
         return responses;
     }
 
-    public List<EnrollmentResponseDto> getByStudentAndStatuses(Long id, EnrollmentStatusEnum statusEnum) {
+    public List<EnrollmentResponseDto> getByStudentAndStatus(Long id, EnrollmentStatusEnum statusEnum) {
         Student student = studentRepo.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException(id));
 
         List<EnrollmentStatusEnum> statusEnum1 = List.of(statusEnum);
+
+        if(!statusEnum1.contains(statusEnum)){
+            throw new StatusNotFoundException(statusEnum1);
+        }
 
         List<Enrollment> enrollments = enrollmentRepo.findByStudentAndStatusIn(student, statusEnum1);
 
@@ -181,7 +185,7 @@ public class EnrollmentService {
 
         if (enrollment.getStatus() == EnrollmentStatusEnum.DROPPED ||
                 enrollment.getStatus() == COMPLETED) {
-            throw new InvalidStatusException(enrollment.getStatus(), updateEnrollmentRequestDto.getStatus());
+            throw new InvalidStatusConversionException(enrollment.getStatus(), updateEnrollmentRequestDto.getStatus());
         }
 
         enrollment.setStatus(updateEnrollmentRequestDto.getStatus());
