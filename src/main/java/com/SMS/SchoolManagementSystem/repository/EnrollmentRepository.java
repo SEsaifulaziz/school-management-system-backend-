@@ -16,11 +16,15 @@ import java.util.List;
 public interface  EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
     List<Enrollment> findBySubject(Subject subjectId);
+
     List<Enrollment> findByStudent(Student studentId);
+
     List<Enrollment> findByStudentAndStatus(Student studentId, EnrollmentStatusEnum statusEnum);
-//    List<Enrollment> findByStudentAndCompletedStatus(Student studentId, EnrollmentStatusEnum statusEnum);
-//    List<Enrollment> findByStudentAndStatusIn(Student studentId, List<EnrollmentStatusEnum> statuses);
+
+    List<Enrollment> findByStudentAndStatusIn(Student studentId, List<EnrollmentStatusEnum> statuses);
+
     boolean existsByStudentAndSubject(Student studentId, Subject subject);
-//    Enrollment findByStudentOrderByEnrollmentDataDesc(Long id, Enrollment enrollment);
+
+    //    Enrollment findByStudentOrderByEnrollmentDataDesc(Long id, Enrollment enrollment);
 
     }

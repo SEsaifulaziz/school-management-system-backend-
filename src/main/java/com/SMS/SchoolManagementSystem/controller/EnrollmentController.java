@@ -5,6 +5,7 @@ import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.CreateEnrollmentRequest
 import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.EnrollmentResponseDto;
 import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.GradeUpdateRequestDto;
 import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.UpdateEnrollmentRequestDto;
+import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
 import com.SMS.SchoolManagementSystem.service.EnrollmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,12 @@ public class EnrollmentController {
     public ResponseEntity<?> getBySubjectId(@PathVariable Long id){
         List<EnrollmentResponseDto> getById = enrollmentService.getEnrollmentsBySubjectId(id);
         return new ResponseEntity<>(getById, HttpStatus.OK);
+    }
+
+    @GetMapping("/getByStudentAndStatus/{id}/status/{status}")
+    public ResponseEntity<?> getByStudentAndStatus(@PathVariable Long id, @PathVariable EnrollmentStatusEnum status){
+        List<EnrollmentResponseDto> getByStudentAndStatus = enrollmentService.getByStudentAndStatuses(id, status);
+        return new ResponseEntity<>(getByStudentAndStatus, HttpStatus.OK);
     }
 
     @GetMapping("/GetByStudentId/{id}/ActiveStatus")

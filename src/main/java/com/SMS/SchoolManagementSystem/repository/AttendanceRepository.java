@@ -14,5 +14,6 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
     Boolean existsByAttendanceDateAndEnrollment(LocalDate date, Enrollment enrollmentId);
     List<Attendance> findAllByAttendanceDate(LocalDate date);
     List<Attendance> findAttendanceByEnrollmentIn(List<Enrollment> enrollments);
+//    List<Attendance> findAttendanceByStatus();
 
 }

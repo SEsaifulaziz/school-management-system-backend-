@@ -74,6 +74,23 @@ public class EnrollmentService {
         return responses;
     }
 
+    public List<EnrollmentResponseDto> getByStudentAndStatuses(Long id, EnrollmentStatusEnum statusEnum) {
+        Student student = studentRepo.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException(id));
+
+        List<EnrollmentStatusEnum> statusEnum1 = List.of(statusEnum);
+
+        List<Enrollment> enrollments = enrollmentRepo.findByStudentAndStatusIn(student, statusEnum1);
+
+        List<EnrollmentResponseDto> responses = new ArrayList<>();
+
+        for(Enrollment enrollment : enrollments){
+            responses.add(mapToResponse(enrollment));
+        }
+        return responses;
+
+    }
+
     public List<EnrollmentResponseDto> getActiveEnrollmentsByStudentId(Long id){
         Student student = studentRepo.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException(id));
