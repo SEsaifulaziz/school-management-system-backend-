@@ -6,7 +6,6 @@ import com.SMS.schoolmanagementsystem.dtos.AttendanceDTO.PercentageResponseDto;
 import com.SMS.schoolmanagementsystem.service.AttendanceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +20,12 @@ import java.util.List;
 public class AttendanceController {
 
     private final AttendanceService attendanceService;
-    private final PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor;
 
     @PostMapping("/addAttendance")
     public ResponseEntity<?> addAttendance(@Valid @RequestBody CreateAttendanceRequestDto create) {
         AttendanceResponseDto saved = attendanceService.createAttendance(create);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
-
 
     @GetMapping("/getAllAttendances")
     public ResponseEntity<?> findAll(){
