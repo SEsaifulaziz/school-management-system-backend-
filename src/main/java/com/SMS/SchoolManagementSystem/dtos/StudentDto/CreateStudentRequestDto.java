@@ -13,7 +13,7 @@ public class CreateStudentRequestDto {
     @NotBlank(message = "Last Name is required")
     private String lastName;
 
-    @Email
+    @Email(message = "Invalid email format")
     @NotBlank(message = "Email is required")
     private String email;
 
