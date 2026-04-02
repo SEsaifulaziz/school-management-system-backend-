@@ -1,4 +1,4 @@
-package com.SMS.SchoolManagementSystem.dtos.SubjectDto;
+package com.SMS.schoolmanagementsystem.dtos.SubjectDto;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

@@ -1,14 +1,12 @@
-package com.SMS.SchoolManagementSystem.repository;
+package com.SMS.schoolmanagementsystem.repository;
 
-import com.SMS.SchoolManagementSystem.entity.Enrollment;
-import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
-import com.SMS.SchoolManagementSystem.entity.Student;
-import com.SMS.SchoolManagementSystem.entity.Subject;
+import com.SMS.schoolmanagementsystem.entity.Enrollment;
+import com.SMS.schoolmanagementsystem.entity.EnrollmentStatusEnum;
+import com.SMS.schoolmanagementsystem.entity.Student;
+import com.SMS.schoolmanagementsystem.entity.Subject;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.w3c.dom.ls.LSInput;
 
 import java.util.List;
 

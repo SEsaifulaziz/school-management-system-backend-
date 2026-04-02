@@ -1,8 +1,6 @@
-package com.SMS.SchoolManagementSystem.dtos.AttendanceDTO;
+package com.SMS.schoolmanagementsystem.dtos.AttendanceDTO;
 
-import com.SMS.SchoolManagementSystem.entity.AttendenceEnum;
-import com.SMS.SchoolManagementSystem.entity.Enrollment;
-import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
+import com.SMS.schoolmanagementsystem.entity.AttendanceEnum;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,7 +15,7 @@ public class AttendanceResponseDto {
     private String studentName;
     private Long subjectId;
     private String subjectName;
-    private AttendenceEnum status;
+    private AttendanceEnum status;
     private LocalDate Date;
     private LocalTime markedAt;
 }

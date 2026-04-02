@@ -1,4 +1,4 @@
-package com.SMS.SchoolManagementSystem.dtos.SubjectDto;
+package com.SMS.schoolmanagementsystem.dtos.SubjectDto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -7,15 +7,15 @@ import lombok.Data;
 @Data
 public class CreateSubjectRequestDto {
 
-    @NotBlank
+    @NotBlank(message = "Subject Code is required")
     private String code;
 
-    @NotBlank
+    @NotBlank(message = "Subject Name is required")
     private String name;
 
     private String description;
 
-    @NotBlank
+    @NotBlank(message = "Grade Level is required")
     private String gradeLevel;
 
     @Positive

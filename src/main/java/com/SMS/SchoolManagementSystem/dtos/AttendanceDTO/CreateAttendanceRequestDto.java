@@ -1,16 +1,16 @@
-package com.SMS.SchoolManagementSystem.dtos.AttendanceDTO;
+package com.SMS.schoolmanagementsystem.dtos.AttendanceDTO;
 
-import com.SMS.SchoolManagementSystem.entity.AttendenceEnum;
+import com.SMS.schoolmanagementsystem.entity.AttendanceEnum;
 import lombok.Data;
 import jakarta.validation.constraints.NotNull;
 
 @Data
 public class CreateAttendanceRequestDto {
 
-    @NotNull
+    @NotNull(message = "Enrollment id is required")
     private Long enrollmentId;
 
-    @NotNull
-    private AttendenceEnum status;
+    @NotNull(message = "Attendance status is required")
+    private AttendanceEnum status;
 
 }

@@ -1,16 +1,17 @@
-package com.SMS.SchoolManagementSystem.service;
+package com.SMS.schoolmanagementsystem.service;
 
-import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.AttendanceResponseDto;
-import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.CreateAttendanceRequestDto;
-import com.SMS.SchoolManagementSystem.entity.*;
-import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.*;
-import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.EnrollmentNotFoundException;
-import com.SMS.SchoolManagementSystem.exception.StudentExceptions.StudentNotFoundException;
-import com.SMS.SchoolManagementSystem.exception.SubjectExceptions.SubjectNotFoundException;
-import com.SMS.SchoolManagementSystem.repository.AttendanceRepository;
-import com.SMS.SchoolManagementSystem.repository.EnrollmentRepository;
-import com.SMS.SchoolManagementSystem.repository.StudentRepository;
-import com.SMS.SchoolManagementSystem.repository.SubjectRepository;
+import com.SMS.schoolmanagementsystem.dtos.AttendanceDTO.AttendanceResponseDto;
+import com.SMS.schoolmanagementsystem.dtos.AttendanceDTO.CreateAttendanceRequestDto;
+import com.SMS.schoolmanagementsystem.dtos.AttendanceDTO.PercentageResponseDto;
+import com.SMS.schoolmanagementsystem.entity.*;
+import com.SMS.schoolmanagementsystem.exception.AttendanceExceptions.*;
+import com.SMS.schoolmanagementsystem.exception.EnrollmentExceptions.EnrollmentNotFoundException;
+import com.SMS.schoolmanagementsystem.exception.StudentExceptions.StudentNotFoundException;
+import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.SubjectNotFoundException;
+import com.SMS.schoolmanagementsystem.repository.AttendanceRepository;
+import com.SMS.schoolmanagementsystem.repository.EnrollmentRepository;
+import com.SMS.schoolmanagementsystem.repository.StudentRepository;
+import com.SMS.schoolmanagementsystem.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +64,40 @@ public class AttendanceService {
        return responses;
     }
 
+    public PercentageResponseDto getPercentage(Long id) {
+        Student student = studentRepo.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException(id));
+        List<Enrollment> enrollment = enrollmentRepo.findByStudent(student);
+
+        List<Attendance> attendance = attendanceRepo.findAttendanceByEnrollmentIn(enrollment);
+
+        long totalClasses = attendance.size();
+
+        long present = 0;
+
+        for (Attendance a : attendance) {
+            if (a.getStatus() == AttendanceEnum.PRESENT) {
+                present++;
+            }
+        }
+
+        double percentage = 0.0;
+
+        if(totalClasses > 0){
+            percentage = (present * 100.0) / totalClasses;
+        }
+
+        PercentageResponseDto response = new PercentageResponseDto();
+        response.setStudentId(student.getId());
+        response.setStudentName(student.getFirstName() + " " + student.getLastName());
+        response.setPercentage(percentage);
+        response.setTotalClasses(totalClasses);
+        response.setPresent(present);
+
+        return response;
+
+    }
+
     public List<AttendanceResponseDto> findBySubjectId(Long id){
 
         Subject subject = subjectRepo.findById(id)
@@ -97,6 +132,8 @@ public class AttendanceService {
         return responses;
     }
 
+
+
     public AttendanceResponseDto createAttendance(CreateAttendanceRequestDto request) {
         Attendance attendance = new Attendance();
 
@@ -120,7 +157,7 @@ public class AttendanceService {
         attendance.setAttendanceDate(LocalDate.now());
         attendance.setMarkedAt(LocalTime.now());
         attendance.setStatus(request.getStatus());
-        Attendance saved  = attendanceRepo.save(attendance);
+        Attendance saved = attendanceRepo.save(attendance);
 
         return mapToResponse(saved);
     }

@@ -1,4 +1,4 @@
-package com.SMS.SchoolManagementSystem.exception.StudentExceptions;
+package com.SMS.schoolmanagementsystem.exception.StudentExceptions;
 
 public class StudentNotFoundException extends RuntimeException {
 

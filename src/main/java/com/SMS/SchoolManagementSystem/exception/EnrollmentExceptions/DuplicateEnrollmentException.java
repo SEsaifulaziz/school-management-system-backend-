@@ -1,7 +1,4 @@
-package com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions;
-
-import com.SMS.SchoolManagementSystem.entity.Student;
-import com.SMS.SchoolManagementSystem.entity.Subject;
+package com.SMS.schoolmanagementsystem.exception.EnrollmentExceptions;
 
 public class DuplicateEnrollmentException extends RuntimeException {
     public DuplicateEnrollmentException(Long studentId, Long subjectId) {

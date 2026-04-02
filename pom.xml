@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.SMS</groupId>
-	<artifactId>SchoolManagementSystem</artifactId>
+	<artifactId>schoolmanagementsystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>SchoolManagementSystem</name>
 	<description>SchoolManagementSystem project for Spring Boot</description>

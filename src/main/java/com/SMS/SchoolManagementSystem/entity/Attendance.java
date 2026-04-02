@@ -1,4 +1,4 @@
-package com.SMS.SchoolManagementSystem.entity;
+package com.SMS.schoolmanagementsystem.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -19,13 +19,13 @@ public class Attendance {
     private Enrollment enrollment;
 
     @NotNull
-    @Column(unique = true)
+    @Column
     LocalDate attendanceDate;
 
     @NotNull
     private LocalTime markedAt;
 
     @NotNull
-    private AttendenceEnum status;
+    private AttendanceEnum status;
 
 }

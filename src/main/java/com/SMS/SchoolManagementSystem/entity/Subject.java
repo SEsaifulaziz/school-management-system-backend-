@@ -1,4 +1,4 @@
-package com.SMS.SchoolManagementSystem.entity;
+package com.SMS.schoolmanagementsystem.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

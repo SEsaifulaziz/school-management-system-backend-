@@ -1,4 +1,4 @@
-package com.SMS.SchoolManagementSystem.exception.AttendanceExceptions;
+package com.SMS.schoolmanagementsystem.exception.AttendanceExceptions;
 
 import java.time.LocalDate;
 

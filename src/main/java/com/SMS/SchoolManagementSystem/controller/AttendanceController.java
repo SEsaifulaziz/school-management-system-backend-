@@ -1,10 +1,12 @@
-package com.SMS.SchoolManagementSystem.controller;
+package com.SMS.schoolmanagementsystem.controller;
 
-import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.AttendanceResponseDto;
-import com.SMS.SchoolManagementSystem.dtos.AttendanceDTO.CreateAttendanceRequestDto;
-import com.SMS.SchoolManagementSystem.service.AttendanceService;
+import com.SMS.schoolmanagementsystem.dtos.AttendanceDTO.AttendanceResponseDto;
+import com.SMS.schoolmanagementsystem.dtos.AttendanceDTO.CreateAttendanceRequestDto;
+import com.SMS.schoolmanagementsystem.dtos.AttendanceDTO.PercentageResponseDto;
+import com.SMS.schoolmanagementsystem.service.AttendanceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +21,11 @@ import java.util.List;
 public class AttendanceController {
 
     private final AttendanceService attendanceService;
+    private final PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor;
 
     @PostMapping("/addAttendance")
     public ResponseEntity<?> addAttendance(@Valid @RequestBody CreateAttendanceRequestDto create) {
-        AttendanceResponseDto saved  =attendanceService.createAttendance(create);
+        AttendanceResponseDto saved = attendanceService.createAttendance(create);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
@@ -55,6 +58,12 @@ public class AttendanceController {
     public ResponseEntity<?> getAttendanceBySubjectId(@PathVariable Long id){
         List<AttendanceResponseDto> getBySubjectId = attendanceService.findBySubjectId(id);
         return new ResponseEntity<>(getBySubjectId, HttpStatus.OK);
+    }
+
+    @GetMapping("/getPercentageByStudent/{id}")
+    public ResponseEntity<?> getPercentageByStudent(@PathVariable Long id){
+        PercentageResponseDto getPercentage = attendanceService.getPercentage(id);
+        return new ResponseEntity<>(getPercentage, HttpStatus.OK);
     }
 
 

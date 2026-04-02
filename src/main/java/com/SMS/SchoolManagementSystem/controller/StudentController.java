@@ -1,9 +1,9 @@
-package com.SMS.SchoolManagementSystem.controller;
+package com.SMS.schoolmanagementsystem.controller;
 
-import com.SMS.SchoolManagementSystem.dtos.StudentDto.CreateStudentRequestDto;
-import com.SMS.SchoolManagementSystem.dtos.StudentDto.StudentResponseDto;
-import com.SMS.SchoolManagementSystem.dtos.StudentDto.UpdateStudentRequestDto;
-import com.SMS.SchoolManagementSystem.service.StudentService;
+import com.SMS.schoolmanagementsystem.dtos.StudentDto.CreateStudentRequestDto;
+import com.SMS.schoolmanagementsystem.dtos.StudentDto.StudentResponseDto;
+import com.SMS.schoolmanagementsystem.dtos.StudentDto.UpdateStudentRequestDto;
+import com.SMS.schoolmanagementsystem.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

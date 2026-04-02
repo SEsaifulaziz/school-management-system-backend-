@@ -1,12 +1,12 @@
-package com.SMS.SchoolManagementSystem.service;
+package com.SMS.schoolmanagementsystem.service;
 
-import com.SMS.SchoolManagementSystem.dtos.SubjectDto.CreateSubjectRequestDto;
-import com.SMS.SchoolManagementSystem.dtos.SubjectDto.SubjectResponseDto;
-import com.SMS.SchoolManagementSystem.dtos.SubjectDto.UpdateSubjectRequestDto;
-import com.SMS.SchoolManagementSystem.entity.Subject;
-import com.SMS.SchoolManagementSystem.exception.SubjectExceptions.DuplicateCodeException;
-import com.SMS.SchoolManagementSystem.exception.SubjectExceptions.SubjectNotFoundException;
-import com.SMS.SchoolManagementSystem.repository.SubjectRepository;
+import com.SMS.schoolmanagementsystem.dtos.SubjectDto.CreateSubjectRequestDto;
+import com.SMS.schoolmanagementsystem.dtos.SubjectDto.SubjectResponseDto;
+import com.SMS.schoolmanagementsystem.dtos.SubjectDto.UpdateSubjectRequestDto;
+import com.SMS.schoolmanagementsystem.entity.Subject;
+import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.DuplicateCodeException;
+import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.SubjectNotFoundException;
+import com.SMS.schoolmanagementsystem.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

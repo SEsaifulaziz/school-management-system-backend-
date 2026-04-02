@@ -1,4 +1,4 @@
-package com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions;
+package com.SMS.schoolmanagementsystem.exception.EnrollmentExceptions;
 
 public class EnrollmentNotFoundException extends RuntimeException {
 

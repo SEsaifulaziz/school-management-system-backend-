@@ -1,14 +1,14 @@
-package com.SMS.SchoolManagementSystem.exception;
+package com.SMS.schoolmanagementsystem.exception;
 
-import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.AttendanceNotFound;
-import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.CompletedException;
-import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.DroppedAttendanceException;
-import com.SMS.SchoolManagementSystem.exception.AttendanceExceptions.DuplicateDateException;
-import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.*;
-import com.SMS.SchoolManagementSystem.exception.StudentExceptions.DuplicateEmailException;
-import com.SMS.SchoolManagementSystem.exception.StudentExceptions.StudentNotFoundException;
-import com.SMS.SchoolManagementSystem.exception.SubjectExceptions.DuplicateCodeException;
-import com.SMS.SchoolManagementSystem.exception.SubjectExceptions.SubjectNotFoundException;
+import com.SMS.schoolmanagementsystem.exception.AttendanceExceptions.AttendanceNotFound;
+import com.SMS.schoolmanagementsystem.exception.AttendanceExceptions.CompletedException;
+import com.SMS.schoolmanagementsystem.exception.AttendanceExceptions.DroppedAttendanceException;
+import com.SMS.schoolmanagementsystem.exception.AttendanceExceptions.DuplicateDateException;
+import com.SMS.schoolmanagementsystem.exception.EnrollmentExceptions.*;
+import com.SMS.schoolmanagementsystem.exception.StudentExceptions.DuplicateEmailException;
+import com.SMS.schoolmanagementsystem.exception.StudentExceptions.StudentNotFoundException;
+import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.DuplicateCodeException;
+import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.SubjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

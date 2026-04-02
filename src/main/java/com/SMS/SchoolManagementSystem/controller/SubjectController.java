@@ -1,12 +1,11 @@
-package com.SMS.SchoolManagementSystem.controller;
+package com.SMS.schoolmanagementsystem.controller;
 
-import com.SMS.SchoolManagementSystem.dtos.SubjectDto.CreateSubjectRequestDto;
-import com.SMS.SchoolManagementSystem.dtos.SubjectDto.SubjectResponseDto;
-import com.SMS.SchoolManagementSystem.dtos.SubjectDto.UpdateSubjectRequestDto;
-import com.SMS.SchoolManagementSystem.service.SubjectService;
+import com.SMS.schoolmanagementsystem.dtos.SubjectDto.CreateSubjectRequestDto;
+import com.SMS.schoolmanagementsystem.dtos.SubjectDto.SubjectResponseDto;
+import com.SMS.schoolmanagementsystem.dtos.SubjectDto.UpdateSubjectRequestDto;
+import com.SMS.schoolmanagementsystem.service.SubjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
-package com.SMS.SchoolManagementSystem.dtos.EnrollmentDto;
+package com.SMS.schoolmanagementsystem.dtos.EnrollmentDto;
 
-import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
+import com.SMS.schoolmanagementsystem.entity.EnrollmentStatusEnum;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

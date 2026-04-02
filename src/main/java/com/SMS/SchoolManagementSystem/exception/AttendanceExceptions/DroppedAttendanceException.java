@@ -1,6 +1,6 @@
-package com.SMS.SchoolManagementSystem.exception.AttendanceExceptions;
+package com.SMS.schoolmanagementsystem.exception.AttendanceExceptions;
 
-import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
+import com.SMS.schoolmanagementsystem.entity.EnrollmentStatusEnum;
 
 public class DroppedAttendanceException extends RuntimeException {
     public DroppedAttendanceException(EnrollmentStatusEnum  enrollmentStatus) {

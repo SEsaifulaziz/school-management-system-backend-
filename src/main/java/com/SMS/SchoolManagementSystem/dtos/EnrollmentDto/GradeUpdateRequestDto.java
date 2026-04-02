@@ -1,4 +1,4 @@
-package com.SMS.SchoolManagementSystem.dtos.EnrollmentDto;
+package com.SMS.schoolmanagementsystem.dtos.EnrollmentDto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

@@ -1,8 +1,7 @@
-package com.SMS.SchoolManagementSystem.entity;
+package com.SMS.schoolmanagementsystem.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 @Data
 @Entity

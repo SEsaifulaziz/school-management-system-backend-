@@ -1,19 +1,19 @@
-package com.SMS.SchoolManagementSystem.service;
+package com.SMS.schoolmanagementsystem.service;
 
-import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.CreateEnrollmentRequestDto;
-import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.EnrollmentResponseDto;
-import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.GradeUpdateRequestDto;
-import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.UpdateEnrollmentRequestDto;
-import com.SMS.SchoolManagementSystem.entity.Enrollment;
-import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
-import com.SMS.SchoolManagementSystem.entity.Student;
-import com.SMS.SchoolManagementSystem.entity.Subject;
-import com.SMS.SchoolManagementSystem.exception.EnrollmentExceptions.*;
-import com.SMS.SchoolManagementSystem.exception.StudentExceptions.StudentNotFoundException;
-import com.SMS.SchoolManagementSystem.exception.SubjectExceptions.SubjectNotFoundException;
-import com.SMS.SchoolManagementSystem.repository.EnrollmentRepository;
-import com.SMS.SchoolManagementSystem.repository.StudentRepository;
-import com.SMS.SchoolManagementSystem.repository.SubjectRepository;
+import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.CreateEnrollmentRequestDto;
+import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.EnrollmentResponseDto;
+import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.GradeUpdateRequestDto;
+import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.UpdateEnrollmentRequestDto;
+import com.SMS.schoolmanagementsystem.entity.Enrollment;
+import com.SMS.schoolmanagementsystem.entity.EnrollmentStatusEnum;
+import com.SMS.schoolmanagementsystem.entity.Student;
+import com.SMS.schoolmanagementsystem.entity.Subject;
+import com.SMS.schoolmanagementsystem.exception.EnrollmentExceptions.*;
+import com.SMS.schoolmanagementsystem.exception.StudentExceptions.StudentNotFoundException;
+import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.SubjectNotFoundException;
+import com.SMS.schoolmanagementsystem.repository.EnrollmentRepository;
+import com.SMS.schoolmanagementsystem.repository.StudentRepository;
+import com.SMS.schoolmanagementsystem.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum.*;
+import static com.SMS.schoolmanagementsystem.entity.EnrollmentStatusEnum.*;
 
 @Service
 @RequiredArgsConstructor

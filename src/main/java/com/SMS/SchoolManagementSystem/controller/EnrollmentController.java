@@ -1,12 +1,12 @@
-package com.SMS.SchoolManagementSystem.controller;
+package com.SMS.schoolmanagementsystem.controller;
 
 
-import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.CreateEnrollmentRequestDto;
-import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.EnrollmentResponseDto;
-import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.GradeUpdateRequestDto;
-import com.SMS.SchoolManagementSystem.dtos.EnrollmentDto.UpdateEnrollmentRequestDto;
-import com.SMS.SchoolManagementSystem.entity.EnrollmentStatusEnum;
-import com.SMS.SchoolManagementSystem.service.EnrollmentService;
+import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.CreateEnrollmentRequestDto;
+import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.EnrollmentResponseDto;
+import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.GradeUpdateRequestDto;
+import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.UpdateEnrollmentRequestDto;
+import com.SMS.schoolmanagementsystem.entity.EnrollmentStatusEnum;
+import com.SMS.schoolmanagementsystem.service.EnrollmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
