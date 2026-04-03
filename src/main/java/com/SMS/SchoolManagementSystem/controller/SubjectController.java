@@ -6,10 +6,13 @@ import com.SMS.schoolmanagementsystem.dtos.SubjectDto.UpdateSubjectRequestDto;
 import com.SMS.schoolmanagementsystem.service.SubjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Page;
 
 @RestController
 @RequestMapping("/api")
@@ -25,9 +28,19 @@ public class SubjectController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    @GetMapping("/getAllSubjects")
-    public ResponseEntity<?> getAll(){
-        return new ResponseEntity<>(subjectService.getAll(), HttpStatus.OK);
+    //without pagination
+//    @GetMapping("/getAllSubjects")
+//    public ResponseEntity<?> getAll(){
+//        return new ResponseEntity<>(subjectService.getAll(), HttpStatus.OK);
+//    }
+
+    @GetMapping("/subjects")
+    public ResponseEntity<Page<SubjectResponseDto>> getAllSubjects(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ){
+      Pageable pageable = PageRequest.of(page, size);
+      return ResponseEntity.ok(subjectService.getSubjects(pageable));
     }
 
     @GetMapping("/getSubjectById/{id}")

@@ -8,10 +8,9 @@ import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.DuplicateCodeE
 import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.SubjectNotFoundException;
 import com.SMS.schoolmanagementsystem.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,16 +18,23 @@ public class SubjectService {
 
     private final SubjectRepository subjectRepo;
 
-    public List<SubjectResponseDto> getAll() {
+           //without pagination
+//    public List<SubjectResponseDto> getAll() {
+//
+//        List<Subject> subjects = subjectRepo.findAll();
+//        List<SubjectResponseDto> responses = new ArrayList<>();
+//
+//        for (Subject subject : subjects) {
+//            SubjectResponseDto response = mapToResponse(subject);
+//            responses.add(response);
+//        }
+//        return responses;
+//    }
 
-        List<Subject> subjects = subjectRepo.findAll();
-        List<SubjectResponseDto> responses = new ArrayList<>();
-
-        for (Subject subject : subjects) {
-            SubjectResponseDto response = mapToResponse(subject);
-            responses.add(response);
-        }
-        return responses;
+           //with pagination
+    public Page<SubjectResponseDto> getSubjects(Pageable pageable) {
+        Page<Subject> subjectPage = subjectRepo.findAll(pageable);
+        return subjectPage.map(this::mapToResponse);
     }
 
     public SubjectResponseDto findById(Long id) {
