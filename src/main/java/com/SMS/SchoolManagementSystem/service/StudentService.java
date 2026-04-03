@@ -8,10 +8,10 @@ import com.SMS.schoolmanagementsystem.exception.StudentExceptions.DuplicateEmail
 import com.SMS.schoolmanagementsystem.exception.StudentExceptions.StudentNotFoundException;
 import com.SMS.schoolmanagementsystem.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,20 +20,29 @@ public class StudentService {
 
     private final StudentRepository studentRepo;
 
-    public List<StudentResponseDto> getAll() {
-        List<Student> students = studentRepo.findAll();
-        List<StudentResponseDto> responses = new ArrayList<>();
+    /********       without Pagination      *******/
 
-        // Simple forLoop
-//        for(Student student: students){
-//            responses.add(mapToResponse(student));
+//    public List<StudentResponseDto> getAll() {
+//        List<Student> students = studentRepo.findAll();
+//        List<StudentResponseDto> responses = new ArrayList<>();
+//
+//        // Simple forLoop
+////        for(Student student: students){
+////            responses.add(mapToResponse(student));
+////        }
+//
+//        for (Student student : students) {
+//            StudentResponseDto response = mapToResponse(student);
+//            responses.add(response);
 //        }
+//        return responses;
+//    }
 
-        for (Student student : students) {
-            StudentResponseDto response = mapToResponse(student);
-            responses.add(response);
-        }
-        return responses;
+
+    // with Pagination and map()
+    public Page<StudentResponseDto> getStudents(Pageable pageable) {
+        Page<Student> studentPage = studentRepo.findAll(pageable);
+        return studentPage.map(this::mapToResponse);
     }
 
     public StudentResponseDto findById(Long id) {
