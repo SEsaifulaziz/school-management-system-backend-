@@ -8,8 +8,7 @@ import lombok.RequiredArgsConstructor;
 public class StudentResponseDto {
 
     private Long id;
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private String email;
     private String enrolledGrade;
 }
