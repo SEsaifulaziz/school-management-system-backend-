@@ -55,7 +55,7 @@ public class StudentController {
             @RequestParam(defaultValue = "5") int size
     ){
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(studentService.getStudents(pageable));
+        return ResponseEntity.ok(studentService.getAll(pageable));
     }
 
 
