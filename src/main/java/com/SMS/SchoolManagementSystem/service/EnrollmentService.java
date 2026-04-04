@@ -1,9 +1,9 @@
 package com.SMS.schoolmanagementsystem.service;
 
-import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.CreateEnrollmentRequestDto;
-import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.EnrollmentResponseDto;
-import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.GradeUpdateRequestDto;
-import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.UpdateEnrollmentRequestDto;
+import com.SMS.schoolmanagementsystem.dto.request.EnrollmentRequestDto;
+import com.SMS.schoolmanagementsystem.dto.response.EnrollmentResponseDto;
+import com.SMS.schoolmanagementsystem.dto.request.GradeUpdateRequestDto;
+import com.SMS.schoolmanagementsystem.dto.request.UpdateEnrollmentRequestDto;
 import com.SMS.schoolmanagementsystem.entity.Enrollment;
 import com.SMS.schoolmanagementsystem.entity.EnrollmentStatusEnum;
 import com.SMS.schoolmanagementsystem.entity.Student;
@@ -111,7 +111,7 @@ public class EnrollmentService {
         return mapToResponse(enrollment);
     }
 
-    public EnrollmentResponseDto createEnrollment(CreateEnrollmentRequestDto request) {
+    public EnrollmentResponseDto createEnrollment(EnrollmentRequestDto request) {
 
         Student student = studentRepo.findById(request.getStudentId())
                 .orElseThrow(() -> new StudentNotFoundException(request.getStudentId()));

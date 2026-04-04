@@ -1,8 +1,8 @@
 package com.SMS.schoolmanagementsystem.controller;
 
-import com.SMS.schoolmanagementsystem.dtos.StudentDto.CreateStudentRequestDto;
-import com.SMS.schoolmanagementsystem.dtos.StudentDto.StudentResponseDto;
-import com.SMS.schoolmanagementsystem.dtos.StudentDto.UpdateStudentRequestDto;
+import com.SMS.schoolmanagementsystem.dto.request.StudentRequestDto;
+import com.SMS.schoolmanagementsystem.dto.response.StudentResponseDto;
+import com.SMS.schoolmanagementsystem.dto.request.UpdateStudentRequestDto;
 import com.SMS.schoolmanagementsystem.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("/addStudent")
-    public ResponseEntity<?> createStudent(@Valid @RequestBody CreateStudentRequestDto request){
+    public ResponseEntity<?> createStudent(@Valid @RequestBody StudentRequestDto request){
         StudentResponseDto saved = studentService.createStudent(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }

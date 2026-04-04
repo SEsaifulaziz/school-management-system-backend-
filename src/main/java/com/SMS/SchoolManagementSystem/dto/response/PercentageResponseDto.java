@@ -1,4 +1,4 @@
-package com.SMS.schoolmanagementsystem.dtos.AttendanceDTO;
+package com.SMS.schoolmanagementsystem.dto.response;
 
 import lombok.Data;
 

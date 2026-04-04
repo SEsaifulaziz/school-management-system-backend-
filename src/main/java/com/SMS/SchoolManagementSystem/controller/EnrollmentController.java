@@ -1,10 +1,10 @@
 package com.SMS.schoolmanagementsystem.controller;
 
 
-import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.CreateEnrollmentRequestDto;
-import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.EnrollmentResponseDto;
-import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.GradeUpdateRequestDto;
-import com.SMS.schoolmanagementsystem.dtos.EnrollmentDto.UpdateEnrollmentRequestDto;
+import com.SMS.schoolmanagementsystem.dto.request.EnrollmentRequestDto;
+import com.SMS.schoolmanagementsystem.dto.response.EnrollmentResponseDto;
+import com.SMS.schoolmanagementsystem.dto.request.GradeUpdateRequestDto;
+import com.SMS.schoolmanagementsystem.dto.request.UpdateEnrollmentRequestDto;
 import com.SMS.schoolmanagementsystem.entity.EnrollmentStatusEnum;
 import com.SMS.schoolmanagementsystem.service.EnrollmentService;
 import jakarta.validation.Valid;
@@ -28,7 +28,7 @@ public class EnrollmentController {
 
 
     @PostMapping("/addEnrollment")
-    public ResponseEntity<?> createEnrollment(@Valid @RequestBody CreateEnrollmentRequestDto request){
+    public ResponseEntity<?> createEnrollment(@Valid @RequestBody EnrollmentRequestDto request){
         EnrollmentResponseDto saved = enrollmentService.createEnrollment(request);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }

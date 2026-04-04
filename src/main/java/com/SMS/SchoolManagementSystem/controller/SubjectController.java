@@ -1,8 +1,8 @@
 package com.SMS.schoolmanagementsystem.controller;
 
-import com.SMS.schoolmanagementsystem.dtos.SubjectDto.CreateSubjectRequestDto;
-import com.SMS.schoolmanagementsystem.dtos.SubjectDto.SubjectResponseDto;
-import com.SMS.schoolmanagementsystem.dtos.SubjectDto.UpdateSubjectRequestDto;
+import com.SMS.schoolmanagementsystem.dto.request.SubjectRequestDto;
+import com.SMS.schoolmanagementsystem.dto.response.SubjectResponseDto;
+import com.SMS.schoolmanagementsystem.dto.request.UpdateSubjectRequestDto;
 import com.SMS.schoolmanagementsystem.service.SubjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class SubjectController {
     private final SubjectService subjectService;
 
     @PostMapping("/addSubject")
-    public ResponseEntity<?> createSubject(@Valid @RequestBody CreateSubjectRequestDto request){
+    public ResponseEntity<?> createSubject(@Valid @RequestBody SubjectRequestDto request){
 
         SubjectResponseDto saved = subjectService.createSubject(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);

@@ -1,8 +1,8 @@
 package com.SMS.schoolmanagementsystem.service;
 
-import com.SMS.schoolmanagementsystem.dtos.StudentDto.CreateStudentRequestDto;
-import com.SMS.schoolmanagementsystem.dtos.StudentDto.StudentResponseDto;
-import com.SMS.schoolmanagementsystem.dtos.StudentDto.UpdateStudentRequestDto;
+import com.SMS.schoolmanagementsystem.dto.request.StudentRequestDto;
+import com.SMS.schoolmanagementsystem.dto.response.StudentResponseDto;
+import com.SMS.schoolmanagementsystem.dto.request.UpdateStudentRequestDto;
 import com.SMS.schoolmanagementsystem.entity.Student;
 import com.SMS.schoolmanagementsystem.exception.StudentExceptions.DuplicateEmailException;
 import com.SMS.schoolmanagementsystem.exception.StudentExceptions.StudentNotFoundException;
@@ -51,7 +51,7 @@ public class StudentService {
         return mapToResponse(student);
     }
 
-    public StudentResponseDto createStudent(CreateStudentRequestDto req) {
+    public StudentResponseDto createStudent(StudentRequestDto req) {
         if (studentRepo.existsByEmail(req.getEmail()))
             throw new DuplicateEmailException(req.getEmail());
 

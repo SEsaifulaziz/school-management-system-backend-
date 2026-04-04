@@ -1,11 +1,13 @@
-package com.SMS.schoolmanagementsystem.dtos.StudentDto;
+package com.SMS.schoolmanagementsystem.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
-public class CreateStudentRequestDto {
+@RequiredArgsConstructor
+public class UpdateStudentRequestDto {
 
     @NotBlank(message = "First Name is required")
     private String firstName;
@@ -13,10 +15,11 @@ public class CreateStudentRequestDto {
     @NotBlank(message = "Last Name is required")
     private String lastName;
 
-    @Email(message = "Invalid email format")
+    @Email
     @NotBlank(message = "Email is required")
     private String email;
 
     @NotBlank(message = "EnrolledGrade is required")
     private String enrolledGrade;
+
 }

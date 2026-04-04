@@ -1,8 +1,8 @@
 package com.SMS.schoolmanagementsystem.service;
 
-import com.SMS.schoolmanagementsystem.dtos.SubjectDto.CreateSubjectRequestDto;
-import com.SMS.schoolmanagementsystem.dtos.SubjectDto.SubjectResponseDto;
-import com.SMS.schoolmanagementsystem.dtos.SubjectDto.UpdateSubjectRequestDto;
+import com.SMS.schoolmanagementsystem.dto.request.SubjectRequestDto;
+import com.SMS.schoolmanagementsystem.dto.response.SubjectResponseDto;
+import com.SMS.schoolmanagementsystem.dto.request.UpdateSubjectRequestDto;
 import com.SMS.schoolmanagementsystem.entity.Subject;
 import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.DuplicateCodeException;
 import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.SubjectNotFoundException;
@@ -45,7 +45,7 @@ public class SubjectService {
         return mapToResponse(subject);
     }
 
-    public SubjectResponseDto createSubject(CreateSubjectRequestDto req) {
+    public SubjectResponseDto createSubject(SubjectRequestDto req) {
 
         if (subjectRepo.existsByCode(req.getCode()))
             throw new DuplicateCodeException(req.getCode());

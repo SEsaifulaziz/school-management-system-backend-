@@ -1,4 +1,4 @@
-package com.SMS.schoolmanagementsystem.dtos.EnrollmentDto;
+package com.SMS.schoolmanagementsystem.dto.response;
 
 import com.SMS.schoolmanagementsystem.entity.EnrollmentStatusEnum;
 import lombok.Data;

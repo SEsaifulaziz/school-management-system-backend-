@@ -1,4 +1,4 @@
-package com.SMS.schoolmanagementsystem.dtos.EnrollmentDto;
+package com.SMS.schoolmanagementsystem.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class CreateEnrollmentRequestDto {
+public class EnrollmentRequestDto {
 
     @NotNull(message = "Student id is required")
     private Long studentId;

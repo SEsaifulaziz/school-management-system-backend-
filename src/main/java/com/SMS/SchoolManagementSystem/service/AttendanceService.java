@@ -1,8 +1,8 @@
 package com.SMS.schoolmanagementsystem.service;
 
-import com.SMS.schoolmanagementsystem.dtos.AttendanceDTO.AttendanceResponseDto;
-import com.SMS.schoolmanagementsystem.dtos.AttendanceDTO.CreateAttendanceRequestDto;
-import com.SMS.schoolmanagementsystem.dtos.AttendanceDTO.PercentageResponseDto;
+import com.SMS.schoolmanagementsystem.dto.response.AttendanceResponseDto;
+import com.SMS.schoolmanagementsystem.dto.request.AttendanceRequestDto;
+import com.SMS.schoolmanagementsystem.dto.response.PercentageResponseDto;
 import com.SMS.schoolmanagementsystem.entity.*;
 import com.SMS.schoolmanagementsystem.exception.AttendanceExceptions.*;
 import com.SMS.schoolmanagementsystem.exception.EnrollmentExceptions.EnrollmentNotFoundException;
@@ -145,7 +145,7 @@ public class AttendanceService {
 
 
 
-    public AttendanceResponseDto createAttendance(CreateAttendanceRequestDto request) {
+    public AttendanceResponseDto createAttendance(AttendanceRequestDto request) {
         Attendance attendance = new Attendance();
 
         Enrollment enrollment = enrollmentRepo.findById(request.getEnrollmentId())

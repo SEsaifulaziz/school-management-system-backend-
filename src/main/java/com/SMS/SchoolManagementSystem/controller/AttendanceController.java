@@ -1,8 +1,8 @@
 package com.SMS.schoolmanagementsystem.controller;
 
-import com.SMS.schoolmanagementsystem.dtos.AttendanceDTO.AttendanceResponseDto;
-import com.SMS.schoolmanagementsystem.dtos.AttendanceDTO.CreateAttendanceRequestDto;
-import com.SMS.schoolmanagementsystem.dtos.AttendanceDTO.PercentageResponseDto;
+import com.SMS.schoolmanagementsystem.dto.response.AttendanceResponseDto;
+import com.SMS.schoolmanagementsystem.dto.request.AttendanceRequestDto;
+import com.SMS.schoolmanagementsystem.dto.response.PercentageResponseDto;
 import com.SMS.schoolmanagementsystem.service.AttendanceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class AttendanceController {
     private final AttendanceService attendanceService;
 
     @PostMapping("/addAttendance")
-    public ResponseEntity<?> addAttendance(@Valid @RequestBody CreateAttendanceRequestDto create) {
+    public ResponseEntity<?> addAttendance(@Valid @RequestBody AttendanceRequestDto create) {
         AttendanceResponseDto saved = attendanceService.createAttendance(create);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
