@@ -1,29 +1,29 @@
-package com.SMS.schoolmanagementsystem.entity;
+    package com.SMS.schoolmanagementsystem.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
+    import jakarta.persistence.*;
+    import lombok.Data;
 
-@Data
-@Entity
-@Table(
-        name = "students",
-        uniqueConstraints = @UniqueConstraint(columnNames = "email")
-)
-public class Student {
+    @Data
+    @Entity
+    @Table(
+            name = "students",
+            uniqueConstraints = @UniqueConstraint(columnNames = "email")
+    )
+    public class Student {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
 
-    @Column(nullable = false)
-    private String firstName;
+        @Column(nullable = false)
+        private String firstName;
 
-    @Column(nullable = false)
-    private String lastName;
+        @Column(nullable = false)
+        private String lastName;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+        @Column(nullable = false, unique = true)
+        private String email;
 
-    @Column(nullable = false)
-    private String enrolledGrade;
-}
+        @Column(nullable = false)
+        private String enrolledGrade;
+    }
