@@ -6,6 +6,7 @@ import com.SMS.schoolmanagementsystem.dto.request.UpdateStudentRequestDto;
 import com.SMS.schoolmanagementsystem.entity.Student;
 import com.SMS.schoolmanagementsystem.exception.StudentExceptions.DuplicateEmailException;
 import com.SMS.schoolmanagementsystem.exception.StudentExceptions.StudentNotFoundException;
+import com.SMS.schoolmanagementsystem.mapper.StudentMapper;
 import com.SMS.schoolmanagementsystem.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ public class StudentService {
 
 
     private final StudentRepository studentRepo;
+    private final StudentMapper studentMapper;
 
     /********       without Pagination      *******/
 
@@ -40,30 +42,25 @@ public class StudentService {
 
 
     // with Pagination and map()
-    public Page<StudentResponseDto> getStudents(Pageable pageable) {
+    public Page<StudentResponseDto> getAll(Pageable pageable) {
         Page<Student> studentPage = studentRepo.findAll(pageable);
-        return studentPage.map(this::mapToResponse);
+        return studentPage.map(studentMapper::toResponse);
     }
 
     public StudentResponseDto findById(Long id) {
         Student student = studentRepo.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException(id));
-        return mapToResponse(student);
+        return studentMapper.toResponse(student);
     }
 
-    public StudentResponseDto createStudent(StudentRequestDto req) {
-        if (studentRepo.existsByEmail(req.getEmail()))
-            throw new DuplicateEmailException(req.getEmail());
+    public StudentResponseDto createStudent(StudentRequestDto dto) {
+        if (studentRepo.existsByEmail(dto.getEmail()))
+            throw new DuplicateEmailException(dto.getEmail());
 
-        Student student = new Student();
-        student.setFirstName(req.getFirstName());
-        student.setLastName(req.getLastName());
-        student.setEmail(req.getEmail());
-        student.setEnrolledGrade(req.getEnrolledGrade());
-
+        Student student = studentMapper.toEntity(dto);
         Student saved = studentRepo.save(student);
 
-        return mapToResponse(saved);
+        return studentMapper.toResponse(saved);
     }
 
     public Student deleteById(Long id) {
@@ -93,16 +90,17 @@ public class StudentService {
 
         Student updatedStudent = studentRepo.save(student);
 
-        return mapToResponse(updatedStudent);
+        return studentMapper.toResponse(updatedStudent);
     }
 
-    private StudentResponseDto mapToResponse(Student student) {
-        StudentResponseDto response = new StudentResponseDto();
-        response.setId(student.getId());
-        response.setFirstName(student.getFirstName());
-        response.setLastName(student.getLastName());
-        response.setEmail(student.getEmail());
-        response.setEnrolledGrade(student.getEnrolledGrade());
-        return response;
-    }
+    //Manual Mapping
+//    private StudentResponseDto mapToResponse(Student student) {
+//        StudentResponseDto response = new StudentResponseDto();
+//        response.setId(student.getId());
+//        response.setFirstName(student.getFirstName());
+//        response.setLastName(student.getLastName());
+//        response.setEmail(student.getEmail());
+//        response.setEnrolledGrade(student.getEnrolledGrade());
+//        return response;
+//    }
 }
