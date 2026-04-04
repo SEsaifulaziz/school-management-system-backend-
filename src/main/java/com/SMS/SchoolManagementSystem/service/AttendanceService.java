@@ -13,6 +13,10 @@ import com.SMS.schoolmanagementsystem.repository.EnrollmentRepository;
 import com.SMS.schoolmanagementsystem.repository.StudentRepository;
 import com.SMS.schoolmanagementsystem.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,15 +34,22 @@ public class AttendanceService {
     private final StudentRepository studentRepo;
     private final SubjectRepository subjectRepo;
 
-    public List<AttendanceResponseDto> findAllAttendance() {
-        List<Attendance> attendances = attendanceRepo.findAll();
-        List<AttendanceResponseDto> responses = new ArrayList<>();
 
-        for(Attendance attendance : attendances) {
-            AttendanceResponseDto attendanceResponse = mapToResponse(attendance);
-            responses.add(attendanceResponse);
-        }
-        return responses;
+     //without pagination
+//    public List<AttendanceResponseDto> findAllAttendance() {
+//        List<Attendance> attendances = attendanceRepo.findAll();
+//        List<AttendanceResponseDto> responses = new ArrayList<>();
+//
+//        for(Attendance attendance : attendances) {
+//            AttendanceResponseDto attendanceResponse = mapToResponse(attendance);
+//            responses.add(attendanceResponse);
+//        }
+//        return responses;
+//    }
+
+    public Page<AttendanceResponseDto> getAll(Pageable pageable){
+        Page<Attendance> attendancePage = attendanceRepo.findAll(pageable);
+        return attendancePage.map(this::mapToResponse);
     }
 
     public AttendanceResponseDto findById(Long id) {
