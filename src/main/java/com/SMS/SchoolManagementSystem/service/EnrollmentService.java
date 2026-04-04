@@ -15,7 +15,10 @@ import com.SMS.schoolmanagementsystem.repository.EnrollmentRepository;
 import com.SMS.schoolmanagementsystem.repository.StudentRepository;
 import com.SMS.schoolmanagementsystem.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,17 +35,24 @@ public class EnrollmentService {
     private final StudentRepository studentRepo;
     private final SubjectRepository subjectRepo;
 
+        //without pagination
+//    public List<EnrollmentResponseDto> getAll() {
+//        List<Enrollment> enrollments = enrollmentRepo.findAll();
+//        List<EnrollmentResponseDto> responses = new ArrayList<>();
+//
+//        for (Enrollment enrollment : enrollments) {
+//            EnrollmentResponseDto response = mapToResponse(enrollment);
+//            responses.add(response);
+//        }
+//        return responses;
+//    }
 
-    public List<EnrollmentResponseDto> getAll() {
-        List<Enrollment> enrollments = enrollmentRepo.findAll();
-        List<EnrollmentResponseDto> responses = new ArrayList<>();
-
-        for (Enrollment enrollment : enrollments) {
-            EnrollmentResponseDto response = mapToResponse(enrollment);
-            responses.add(response);
-        }
-        return responses;
+    //with Pagination
+    public Page<EnrollmentResponseDto> getEnrollments(Pageable pageable){
+        Page<Enrollment> enrollmentPage = enrollmentRepo.findAll(pageable);
+        return enrollmentPage.map(this::mapToResponse);
     }
+
 
     public List<EnrollmentResponseDto> getEnrollmentsByStudentId(Long studentId) {
         Student student = studentRepo.findById(studentId)

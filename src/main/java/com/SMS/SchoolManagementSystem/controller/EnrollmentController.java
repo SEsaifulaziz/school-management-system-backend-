@@ -9,11 +9,15 @@ import com.SMS.schoolmanagementsystem.entity.EnrollmentStatusEnum;
 import com.SMS.schoolmanagementsystem.service.EnrollmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api")
@@ -29,10 +33,22 @@ public class EnrollmentController {
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
-    @GetMapping("/getAllEnrollments")
-    public ResponseEntity<?> findAll(){
-        List<EnrollmentResponseDto> getAll = enrollmentService.getAll();
-        return new ResponseEntity<>(getAll, HttpStatus.OK);
+       //without Pagination
+//    @GetMapping("/getAllEnrollments")
+//    public ResponseEntity<?> findAll(){
+//        List<EnrollmentResponseDto> getAll = enrollmentService.getAll();
+//        return new ResponseEntity<>(getAll, HttpStatus.OK);
+//    }
+
+    //with Pagination
+    @GetMapping("enrollments")
+    public ResponseEntity<Page<EnrollmentResponseDto>> getEnrollments(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ){
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(enrollmentService.getEnrollments(pageable));
+
     }
 
     @GetMapping("/getById/{id}")
