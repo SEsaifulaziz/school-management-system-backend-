@@ -41,13 +41,14 @@ public class EnrollmentController {
 //    }
 
     //with Pagination
-    @GetMapping("enrollments")
+    @GetMapping("/enrollments")
     public ResponseEntity<Page<EnrollmentResponseDto>> getEnrollments(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size
     ){
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(enrollmentService.getEnrollments(pageable));
+        return
+                ResponseEntity.ok(enrollmentService.getEnrollments(pageable));
 
     }
 
