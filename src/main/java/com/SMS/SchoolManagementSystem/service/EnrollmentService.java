@@ -11,6 +11,7 @@ import com.SMS.schoolmanagementsystem.entity.Subject;
 import com.SMS.schoolmanagementsystem.exception.EnrollmentExceptions.*;
 import com.SMS.schoolmanagementsystem.exception.StudentExceptions.StudentNotFoundException;
 import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.SubjectNotFoundException;
+import com.SMS.schoolmanagementsystem.mapper.EnrollmentMapper;
 import com.SMS.schoolmanagementsystem.repository.EnrollmentRepository;
 import com.SMS.schoolmanagementsystem.repository.StudentRepository;
 import com.SMS.schoolmanagementsystem.repository.SubjectRepository;
@@ -34,6 +35,7 @@ public class EnrollmentService {
     private final EnrollmentRepository enrollmentRepo;
     private final StudentRepository studentRepo;
     private final SubjectRepository subjectRepo;
+    private final EnrollmentMapper enrollmentMapper;
 
         //without pagination
 //    public List<EnrollmentResponseDto> getAll() {
@@ -46,6 +48,7 @@ public class EnrollmentService {
 //        }
 //        return responses;
 //    }
+
 
     //with Pagination
     public Page<EnrollmentResponseDto> getEnrollments(Pageable pageable){
@@ -111,29 +114,35 @@ public class EnrollmentService {
         return mapToResponse(enrollment);
     }
 
-    public EnrollmentResponseDto createEnrollment(EnrollmentRequestDto request) {
+    public EnrollmentResponseDto createEnrollment(EnrollmentRequestDto dto) {
 
-        Student student = studentRepo.findById(request.getStudentId())
-                .orElseThrow(() -> new StudentNotFoundException(request.getStudentId()));
-
-        Subject subject = subjectRepo.findById(request.getSubjectId())
-                .orElseThrow(() -> new SubjectNotFoundException(request.getSubjectId()));
-
-        boolean alreadyEnrolled = enrollmentRepo.existsByStudentAndSubject(student, subject);
-        if (alreadyEnrolled) {
-            throw new DuplicateEnrollmentException(request.getStudentId(), request.getSubjectId());
-        }
-
-        Enrollment enrollment = new Enrollment();
-
-        enrollment.setStudent(student);
-        enrollment.setSubject(subject);
-        enrollment.setEnrollmentDate(LocalDate.now());
-        enrollment.setStatus(ACTIVE);
-
+        Enrollment enrollment = enrollmentMapper.toEntity(dto);
         Enrollment saved = enrollmentRepo.save(enrollment);
 
-        return mapToResponse(saved);
+        return enrollmentMapper.toResponse(saved);
+
+
+//        Student student = studentRepo.findById(request.getStudentId())
+//                .orElseThrow(() -> new StudentNotFoundException(request.getStudentId()));
+//
+//        Subject subject = subjectRepo.findById(request.getSubjectId())
+//                .orElseThrow(() -> new SubjectNotFoundException(request.getSubjectId()));
+//
+//        boolean alreadyEnrolled = enrollmentRepo.existsByStudentAndSubject(student, subject);
+//        if (alreadyEnrolled) {
+//            throw new DuplicateEnrollmentException(request.getStudentId(), request.getSubjectId());
+//        }
+//
+//        Enrollment enrollment = new Enrollment();
+//
+//        enrollment.setStudent(student);
+//        enrollment.setSubject(subject);
+//        enrollment.setEnrollmentDate(LocalDate.now());
+//        enrollment.setStatus(ACTIVE);
+//
+//        Enrollment saved = enrollmentRepo.save(enrollment);
+//
+//        return mapToResponse(saved);
 
     }
 
