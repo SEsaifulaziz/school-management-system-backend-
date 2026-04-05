@@ -6,6 +6,7 @@ import com.SMS.schoolmanagementsystem.dto.request.UpdateSubjectRequestDto;
 import com.SMS.schoolmanagementsystem.entity.Subject;
 import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.DuplicateCodeException;
 import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.SubjectNotFoundException;
+import com.SMS.schoolmanagementsystem.mapper.SubjectMapper;
 import com.SMS.schoolmanagementsystem.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class SubjectService {
 
     private final SubjectRepository subjectRepo;
+    private final SubjectMapper subjectMapper;
 
            //without pagination
 //    public List<SubjectResponseDto> getAll() {
@@ -32,9 +34,9 @@ public class SubjectService {
 //    }
 
            //with pagination
-    public Page<SubjectResponseDto> getSubjects(Pageable pageable) {
+    public Page<SubjectResponseDto> getAll(Pageable pageable) {
         Page<Subject> subjectPage = subjectRepo.findAll(pageable);
-        return subjectPage.map(this::mapToResponse);
+        return subjectPage.map(subjectMapper::toResponse);
     }
 
     public SubjectResponseDto findById(Long id) {
@@ -42,24 +44,18 @@ public class SubjectService {
         Subject subject = subjectRepo.findById(id)
                 .orElseThrow(() -> new SubjectNotFoundException(id));
 
-        return mapToResponse(subject);
+        return subjectMapper.toResponse(subject);
     }
 
-    public SubjectResponseDto createSubject(SubjectRequestDto req) {
+    public SubjectResponseDto createSubject(SubjectRequestDto dto) {
 
-        if (subjectRepo.existsByCode(req.getCode()))
-            throw new DuplicateCodeException(req.getCode());
+        if (subjectRepo.existsByCode(dto.getCode()))
+            throw new DuplicateCodeException(dto.getCode());
 
-        Subject subject = new Subject();
-        subject.setCode(req.getCode());
-        subject.setName(req.getName());
-        subject.setDescription(req.getDescription());
-        subject.setGradeLevel(req.getGradeLevel());
-        subject.setCreditHours(req.getCreditHours());
-
+        Subject subject = subjectMapper.toEntity(dto);
         Subject saved = subjectRepo.save(subject);
 
-        return mapToResponse(saved);
+        return subjectMapper.toResponse(saved);
     }
 
     public void deleteById(Long id) {
@@ -85,20 +81,21 @@ public class SubjectService {
 
         Subject updated = subjectRepo.save(subject);
 
-        return mapToResponse(updated);
+        return subjectMapper.toResponse(updated);
     }
 
-    private SubjectResponseDto mapToResponse(Subject subject) {
-        SubjectResponseDto response = new SubjectResponseDto();
-        response.setId(subject.getId());
-        response.setCode(subject.getCode());
-        response.setName(subject.getName());
-        response.setGradeLevel(subject.getGradeLevel());
-        response.setCreditHours(subject.getCreditHours());
-        response.setDescription(subject.getDescription());
-        response.setActive(subject.getActive());
-
-        return response;
-
-    }
+    //hard coded mapping
+//    private SubjectResponseDto mapToResponse(Subject subject) {
+//        SubjectResponseDto response = new SubjectResponseDto();
+//        response.setId(subject.getId());
+//        response.setCode(subject.getCode());
+//        response.setName(subject.getName());
+//        response.setGradeLevel(subject.getGradeLevel());
+//        response.setCreditHours(subject.getCreditHours());
+//        response.setDescription(subject.getDescription());
+//        response.setActive(subject.getActive());
+//
+//        return response;
+//
+//    }
 }
