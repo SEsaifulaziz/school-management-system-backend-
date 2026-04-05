@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StudentMapper {
 
-    //DTO -> Entity
+    //RequestDTO -> Entity
     public Student toEntity(StudentRequestDto dto){
         Student student = new Student();
 
