@@ -40,7 +40,7 @@ public class SubjectController {
             @RequestParam(defaultValue = "5") int size
     ){
       Pageable pageable = PageRequest.of(page, size);
-      return ResponseEntity.ok(subjectService.getSubjects(pageable));
+      return ResponseEntity.ok(subjectService.getAll(pageable));
     }
 
     @GetMapping("/getSubjectById/{id}")
