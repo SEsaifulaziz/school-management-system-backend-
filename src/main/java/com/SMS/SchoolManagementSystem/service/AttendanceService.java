@@ -5,9 +5,9 @@ import com.SMS.schoolmanagementsystem.dto.request.AttendanceRequestDto;
 import com.SMS.schoolmanagementsystem.dto.response.PercentageResponseDto;
 import com.SMS.schoolmanagementsystem.entity.*;
 import com.SMS.schoolmanagementsystem.exception.AttendanceExceptions.*;
-import com.SMS.schoolmanagementsystem.exception.EnrollmentExceptions.EnrollmentNotFoundException;
 import com.SMS.schoolmanagementsystem.exception.StudentExceptions.StudentNotFoundException;
 import com.SMS.schoolmanagementsystem.exception.SubjectExceptions.SubjectNotFoundException;
+import com.SMS.schoolmanagementsystem.mapper.AttendanceMapper;
 import com.SMS.schoolmanagementsystem.repository.AttendanceRepository;
 import com.SMS.schoolmanagementsystem.repository.EnrollmentRepository;
 import com.SMS.schoolmanagementsystem.repository.StudentRepository;
@@ -20,7 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +32,7 @@ public class AttendanceService {
     private final EnrollmentRepository enrollmentRepo;
     private final StudentRepository studentRepo;
     private final SubjectRepository subjectRepo;
+    private final AttendanceMapper attendanceMapper;
 
 
      //without pagination
@@ -49,13 +49,13 @@ public class AttendanceService {
 
     public Page<AttendanceResponseDto> getAll(Pageable pageable){
         Page<Attendance> attendancePage = attendanceRepo.findAll(pageable);
-        return attendancePage.map(this::mapToResponse);
+        return attendancePage.map(attendanceMapper::toResponse);
     }
 
     public AttendanceResponseDto findById(Long id) {
         Attendance attendance = attendanceRepo.findById(id)
                 .orElseThrow(() -> new AttendanceNotFound(id));
-        return mapToResponse(attendance);
+        return attendanceMapper.toResponse(attendance);
     }
 
     public List<AttendanceResponseDto> findByStudentId(Long id) {
@@ -145,32 +145,37 @@ public class AttendanceService {
 
 
 
-    public AttendanceResponseDto createAttendance(AttendanceRequestDto request) {
-        Attendance attendance = new Attendance();
+    public AttendanceResponseDto create(AttendanceRequestDto dto) {
 
-        Enrollment enrollment = enrollmentRepo.findById(request.getEnrollmentId())
-                .orElseThrow(() -> new EnrollmentNotFoundException(request.getEnrollmentId()));
-
-
-        if(enrollment.getStatus() == EnrollmentStatusEnum.COMPLETED){
-            throw new CompletedException(enrollment.getStatus());
-        }
-
-        if(enrollment.getStatus() == EnrollmentStatusEnum.DROPPED) {
-            throw new DroppedAttendanceException(enrollment.getStatus());
-        }
-
-        if(attendanceRepo.existsByAttendanceDateAndEnrollment(LocalDate.now(), enrollment)) {
-            throw new DuplicateDateException(request.getEnrollmentId(), LocalDate.now());
-        }
-
-        attendance.setEnrollment(enrollment);
-        attendance.setAttendanceDate(LocalDate.now());
-        attendance.setMarkedAt(LocalTime.now());
-        attendance.setStatus(request.getStatus());
+        Attendance attendance = attendanceMapper.toEntity(dto);
         Attendance saved = attendanceRepo.save(attendance);
+        return attendanceMapper.toResponse(saved);
 
-        return mapToResponse(saved);
+//        Attendance attendance = new Attendance();
+//
+//        Enrollment enrollment = enrollmentRepo.findById(request.getEnrollmentId())
+//                .orElseThrow(() -> new EnrollmentNotFoundException(request.getEnrollmentId()));
+//
+//
+//        if(enrollment.getStatus() == EnrollmentStatusEnum.COMPLETED){
+//            throw new CompletedException(enrollment.getStatus());
+//        }
+//
+//        if(enrollment.getStatus() == EnrollmentStatusEnum.DROPPED) {
+//            throw new DroppedAttendanceException(enrollment.getStatus());
+//        }
+//
+//        if(attendanceRepo.existsByAttendanceDateAndEnrollment(LocalDate.now(), enrollment)) {
+//            throw new DuplicateDateException(request.getEnrollmentId(), LocalDate.now());
+//        }
+
+//        attendance.setEnrollment(enrollment);
+//        attendance.setAttendanceDate(LocalDate.now());
+//        attendance.setMarkedAt(LocalTime.now());
+//        attendance.setStatus(request.getStatus());
+//        Attendance saved = attendanceRepo.save(attendance);
+//
+//        return mapToResponse(saved);
     }
 
     public void deleteById(Long id){
