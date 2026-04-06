@@ -1,7 +1,6 @@
 package com.SMS.schoolmanagementsystem.mapper;
 
 import com.SMS.schoolmanagementsystem.dto.request.AttendanceRequestDto;
-import com.SMS.schoolmanagementsystem.dto.request.EnrollmentRequestDto;
 import com.SMS.schoolmanagementsystem.dto.response.AttendanceResponseDto;
 import com.SMS.schoolmanagementsystem.entity.Attendance;
 import com.SMS.schoolmanagementsystem.entity.Enrollment;
