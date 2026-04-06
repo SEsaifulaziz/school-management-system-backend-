@@ -26,7 +26,7 @@ public class AttendanceController {
 
     @PostMapping("/addAttendance")
     public ResponseEntity<?> addAttendance(@Valid @RequestBody AttendanceRequestDto create) {
-        AttendanceResponseDto saved = attendanceService.createAttendance(create);
+        AttendanceResponseDto saved = attendanceService.create(create);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
