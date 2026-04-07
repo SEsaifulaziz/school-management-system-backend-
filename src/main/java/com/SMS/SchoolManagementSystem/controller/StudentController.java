@@ -68,7 +68,7 @@ public class StudentController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/deleteAllStudents")
+    @DeleteMapping("/deleteAll")
     public ResponseEntity<?> deleteAll(){
         studentService.deleteAll();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -79,7 +79,7 @@ public class StudentController {
         return new ResponseEntity<>(studentService.deleteById(id), HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/updateStudent/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateStudent(@Valid @PathVariable Long id,
                                            @Valid @RequestBody UpdateStudentRequestDto updateRequest) {
         StudentResponseDto student = studentService.updateStudent(id, updateRequest);
