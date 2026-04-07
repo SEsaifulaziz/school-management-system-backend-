@@ -62,7 +62,7 @@ public class StudentController {
     @GetMapping("/getStudentById/{id}")
     public ResponseEntity<?> findById(@Valid @PathVariable Long id){
         StudentResponseDto student = studentService.findById(id);
-        if(!student.equals("") && student != null){
+        if(student != null){
             return new ResponseEntity<>(student, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
