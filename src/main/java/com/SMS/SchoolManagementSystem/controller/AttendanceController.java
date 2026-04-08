@@ -54,20 +54,20 @@ public class AttendanceController {
     }
 
     @GetMapping("/getByDate/{date}")
-    public ResponseEntity<?> getByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
-        List<AttendanceResponseDto> getByDate = attendanceService.findByDate(date);
+    public ResponseEntity<Page<AttendanceResponseDto>> getByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, Pageable pageable){
+        Page<AttendanceResponseDto> getByDate = attendanceService.findByDate(date, pageable);
         return new ResponseEntity<>(getByDate, HttpStatus.OK);
     }
 
     @GetMapping("/getAttendanceByStudentId/{id}")
-    public ResponseEntity<?> getAttendanceByStudentId(@PathVariable Long id){
-        List<AttendanceResponseDto> getByStudentId = attendanceService.findByStudentId(id);
+    public ResponseEntity<Page<AttendanceResponseDto>> getAttendanceByStudentId(@PathVariable Long id, Pageable pageable){
+        Page<AttendanceResponseDto> getByStudentId = attendanceService.findByStudentId(id, pageable);
         return new ResponseEntity<>(getByStudentId, HttpStatus.OK);
     }
 
     @GetMapping("/getAttendaceBySubjectId/{id}")
-    public ResponseEntity<?> getAttendanceBySubjectId(@PathVariable Long id){
-        List<AttendanceResponseDto> getBySubjectId = attendanceService.findBySubjectId(id);
+    public ResponseEntity<Page<AttendanceResponseDto>> getAttendanceBySubjectId(@PathVariable Long id, Pageable pageable){
+        Page<AttendanceResponseDto> getBySubjectId = attendanceService.findBySubjectId(id, pageable);
         return new ResponseEntity<>(getBySubjectId, HttpStatus.OK);
     }
 
