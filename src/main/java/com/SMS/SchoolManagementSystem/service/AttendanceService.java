@@ -58,44 +58,38 @@ public class AttendanceService {
         return attendanceMapper.toResponse(attendance);
     }
 
-    public List<AttendanceResponseDto> findByStudentId(Long id) {
+    public Page<AttendanceResponseDto> findByStudentId(Long id, Pageable pageable) {
 
         Student student = studentRepo.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException(id));
 
         List<Enrollment> enrollment = enrollmentRepo.findByStudent(student);
-        List<Attendance> attendances = attendanceRepo.findAttendanceByEnrollmentIn(enrollment);
+        Page<Attendance> attendances = attendanceRepo.findAttendanceByEnrollmentIn(enrollment, pageable);
 
-        List<AttendanceResponseDto> responses = new ArrayList<>();
+        return attendances.map(attendanceMapper::toResponse);
 
-       for(Attendance attendance : attendances) {
-           AttendanceResponseDto attendanceResponse = mapToResponse(attendance);
-           responses.add(attendanceResponse);
-       }
-       return responses;
+//        List<AttendanceResponseDto> responses = new ArrayList<>();
+//
+//       for(Attendance attendance : attendances) {
+//           AttendanceResponseDto attendanceResponse = mapToResponse(attendance);
+//           responses.add(attendanceResponse);
+//       }
+//       return responses;
     }
 
     public PercentageResponseDto getPercentage(Long id) {
         Student student = studentRepo.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException(id));
+
         List<Enrollment> enrollment = enrollmentRepo.findByStudent(student);
 
-        List<Attendance> attendance = attendanceRepo.findAttendanceByEnrollmentIn(enrollment);
-
-        long totalClasses = attendance.size();
-
-        long present = 0;
-
-        for (Attendance a : attendance) {
-            if (a.getStatus() == AttendanceEnum.PRESENT) {
-                present++;
-            }
-        }
+        long totalClasses = attendanceRepo.countTotalClasses(enrollment);
+        long presentClasses = attendanceRepo.countPresentClasses(enrollment);
 
         double percentage = 0.0;
 
         if(totalClasses > 0){
-            percentage = (present * 100.0) / totalClasses;
+            percentage = (presentClasses * 100.0) / totalClasses;
         }
 
         PercentageResponseDto response = new PercentageResponseDto();
@@ -103,44 +97,46 @@ public class AttendanceService {
         response.setStudentName(student.getFirstName() + " " + student.getLastName());
         response.setPercentage(percentage);
         response.setTotalClasses(totalClasses);
-        response.setPresent(present);
+        response.setPresent(presentClasses);
 
         return response;
 
     }
 
-    public List<AttendanceResponseDto> findBySubjectId(Long id){
+    public Page<AttendanceResponseDto> findBySubjectId(Long id, Pageable pageable){
 
         Subject subject = subjectRepo.findById(id)
                 .orElseThrow(() -> new SubjectNotFoundException(id));
 
         List<Enrollment> enrollment = enrollmentRepo.findBySubject(subject);
-        List<Attendance> attendances = attendanceRepo.findAttendanceByEnrollmentIn(enrollment);
+        Page<Attendance> attendances = attendanceRepo.findAttendanceByEnrollmentIn(enrollment, pageable);
 
-        List<AttendanceResponseDto> responses = new ArrayList<>();
-
-        for(Attendance attendance : attendances){
-            responses.add(mapToResponse(attendance));
-        }
-        return responses;
+        return attendances.map(attendanceMapper::toResponse);
+//        List<AttendanceResponseDto> responses = new ArrayList<>();
+//
+//        for(Attendance attendance : attendances){
+//            responses.add(mapToResponse(attendance));
+//        }
+//        return responses;
     }
 
-    public List<AttendanceResponseDto> findByDate(LocalDate date) {
-        List<Attendance> attendance = attendanceRepo.findAllByAttendanceDate(date);
+    public Page<AttendanceResponseDto> findByDate(LocalDate date, Pageable pageable) {
+        Page<Attendance> attendance = attendanceRepo.findAllByAttendanceDate(date, pageable);
 
-        List<AttendanceResponseDto> responses = new ArrayList<>();
-
-        for(Attendance attendances : attendance){
-
-            AttendanceResponseDto attendanceResponse = mapToResponse(attendances);
-            responses.add(attendanceResponse);
-
-//            if(!attendanceResponse.equals(" ") && attendanceResponse != null) {
-//            }
-//            throw new EmptyAttendanceException(date);
-
-        }
-        return responses;
+        return attendance.map(this::mapToResponse);
+//        List<AttendanceResponseDto> responses = new ArrayList<>();
+//
+//        for(Attendance attendances : attendance){
+//
+//            AttendanceResponseDto attendanceResponse = mapToResponse(attendances);
+//            responses.add(attendanceResponse);
+//
+////            if(!attendanceResponse.equals(" ") && attendanceResponse != null) {
+////            }
+////            throw new EmptyAttendanceException(date);
+//
+//        }
+//        return responses;
     }
 
 
