@@ -14,8 +14,6 @@ public class AttendanceRequestDto {
     private Long enrollmentId;
 
     @NotNull(message = "Attendance status is required")
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
     private AttendanceEnum status;
 
 }
