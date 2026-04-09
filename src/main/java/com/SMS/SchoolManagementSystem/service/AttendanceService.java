@@ -84,12 +84,13 @@ public class AttendanceService {
         List<Enrollment> enrollment = enrollmentRepo.findByStudent(student);
 
         long totalClasses = attendanceRepo.countTotalClasses(enrollment);
-        long presentClasses = attendanceRepo.countPresentClasses(enrollment);
+        long presentClasses = attendanceRepo.countPresentClasses(enrollment, AttendanceEnum.PRESENT);
 
         double percentage = 0.0;
 
         if(totalClasses > 0){
             percentage = (presentClasses * 100.0) / totalClasses;
+            percentage = Math.round(percentage*100.0)/100.0;
         }
 
         PercentageResponseDto response = new PercentageResponseDto();

@@ -1,6 +1,7 @@
 package com.SMS.schoolmanagementsystem.repository;
 
 import com.SMS.schoolmanagementsystem.entity.Attendance;
+import com.SMS.schoolmanagementsystem.entity.AttendanceEnum;
 import com.SMS.schoolmanagementsystem.entity.Enrollment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,11 +21,11 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
     Page<Attendance> findAttendanceByEnrollmentIn(List<Enrollment> enrollments, Pageable pageable);
 
-    @Query("SELECT COUNT(a) FROM Attendance a WHERE a.enrollment IN :enrollmets")
+    @Query("SELECT COUNT(a) FROM Attendance a WHERE a.enrollment IN :enrollments")
     long countTotalClasses(List<Enrollment> enrollments);
 
-    @Query("SELECT COUNT(a) FROM Attendance a WHERE a.enrollment IN :enrollments AND a.status = 'PRESENT'")
-    long countPresentClasses(List<Enrollment> enrollments);
+    @Query("SELECT COUNT(a) FROM Attendance a WHERE a.enrollment IN :enrollments AND a.status = :status")
+    long countPresentClasses(List<Enrollment> enrollments, AttendanceEnum status);
 
     Page<Attendance> findAll(Pageable pageable);
 

@@ -26,6 +26,8 @@ public class Attendance {
     private LocalTime markedAt;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private AttendanceEnum status;
 
 }

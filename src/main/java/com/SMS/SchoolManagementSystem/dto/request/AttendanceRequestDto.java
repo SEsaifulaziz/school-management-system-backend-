@@ -1,6 +1,9 @@
 package com.SMS.schoolmanagementsystem.dto.request;
 
 import com.SMS.schoolmanagementsystem.entity.AttendanceEnum;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 import jakarta.validation.constraints.NotNull;
 
@@ -11,6 +14,8 @@ public class AttendanceRequestDto {
     private Long enrollmentId;
 
     @NotNull(message = "Attendance status is required")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
     private AttendanceEnum status;
 
 }
