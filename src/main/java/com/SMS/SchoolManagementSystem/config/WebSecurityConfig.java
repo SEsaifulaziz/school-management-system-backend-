@@ -27,6 +27,14 @@ public class WebSecurityConfig {
     }
 
 
+    @Bean
+    UserDetailsService userDetailsService() {
+        UserDetails user = User.withUsername("admin")
+                .password("password").
+                roles("ADMIN").
+                build();
 
+        return new InMemoryUserDetailsManager(user);
+    }
 }
 
